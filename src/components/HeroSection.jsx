@@ -13,6 +13,11 @@ const HeroSection = () => {
     }
   }, []);
 
+  const titleText = "CREATIVE DESIGNER";
+  const letters = titleText.split("").map((letter) =>
+    letter === " " ? "\u00A0" : letter
+  );
+
   return (
     <>
       <style>{`
@@ -20,6 +25,7 @@ const HeroSection = () => {
         @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 
         * { box-sizing: border-box; margin:0; padding:0; }
+        html, body { overflow-x: hidden; width: 100vw; }
 
         :root {
           --bg: #f5f5f5;
@@ -32,48 +38,71 @@ const HeroSection = () => {
 
         .hero-wrap {
           width: 100%;
-          max-width: 1920px;
-          height: 100vh;
-          margin: 0 auto;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           position: relative;
           overflow-x: hidden;
-          background: var(--bg);
+          padding: 0 1rem;
         }
 
-        .hero-container { width: 100%; height: 100%; position: relative; }
+        .hero-container {
+          width: 100%;
+          max-width: 1200px;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: space-between;
+          position: relative;
+        }
 
         .visitor-count {
           position: absolute;
-          top: 1.5rem;
-          left: 2rem;
+          top: 1rem;
+          left: 1rem;
           font-family: var(--mono);
           font-size: clamp(12px, 1.2vw, 16px);
           letter-spacing: 1px;
           z-index: 80;
         }
 
+        @keyframes slide-from-top-to-bottom {
+          0% { transform: translateY(-120%); opacity: 0; }
+          100% { transform: translateY(0); opacity: 1; }
+        }
+
         .hero-title {
-          position: absolute;
-          top: 3rem;
-          left: 2rem;
           font-family: var(--display);
-          font-size: clamp(60px, 19vw, 170px);
+          font-size: clamp(40px, 6vw, 90px);
           font-weight: 400;
           text-transform: uppercase;
-          line-height: 1;
+          line-height: 1.1;
           color: var(--text);
-          z-index: 10;
-          white-space: nowrap;
+          display: flex;
+          flex-wrap: wrap;
+          max-width: 100%;
+          margin-bottom: 1rem;
+        }
+
+        .letter-wrap { display: inline-block; overflow: hidden; }
+        .letter {
+          display: inline-block;
+          transform: translateY(-120%);
+          opacity: 0;
+          animation-name: slide-from-top-to-bottom;
+          animation-duration: 0.8s;
+          animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+          animation-fill-mode: forwards;
         }
 
         .portrait-wrap {
-          position: absolute;
-          top: 40%;
-          left: 60%;
-          width: clamp(200px, 25vw, 400px);
-          aspect-ratio: 4 / 5; /* fixed 4:5 ratio */
-          transform: translateX(-50%);
-          z-index: 40;
+          width: clamp(200px, 25vw, 350px);
+          aspect-ratio: 4 / 5;
+          margin-top: 1rem;
+          animation: image-fade-slide-up 1s ease-out forwards;
+          flex-shrink: 0;
         }
 
         .portrait-wrap img {
@@ -84,93 +113,89 @@ const HeroSection = () => {
           border-radius: 4px;
         }
 
-        .services-list {
-          position: absolute;
-          top: 93%;
-          left: 28%;
-          font-family: var(--mono);
-          font-size: clamp(14px, 2vw, 18px);
-          font-weight: 700;
-          text-transform: uppercase;
-          line-height: 2;
-          z-index: 45;
+        @keyframes image-fade-slide-up {
+          0% { opacity: 0; transform: translateY(20px); }
+          100% { opacity: 1; transform: translateY(0); }
         }
 
-        .based-in {
-          position: absolute;
-          top: 40%;
-          right: 2%;
-          font-family: var(--mono);
-          font-weight: 800;
-          font-size: clamp(18px, 18vw, 16px);
-          letter-spacing: clamp(5px, 10vw, 11px);
-          z-index: 45;
+        @keyframes fade-up-slight {
+          0% { opacity: 0; transform: translateY(10px); }
+          100% { opacity: 1; transform: translateY(0); }
         }
 
+        .text-block {
+          max-width: 600px;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .services-list,
+        .based-in,
         .description {
-          position: absolute;
-          bottom: -13rem;
-          left: 50%;
-          transform: translateX(-50%);
-          width: clamp(250px, 60%, 600px);
-          text-align: center;
-          font-family: var(--mono);
-          font-size: clamp(10px, 1vw, 14px);
-          line-height: 1.6;
-          letter-spacing: 0.5px;
-          z-index: 45;
+          opacity: 0;
+          animation: fade-up-slight 1s ease-out forwards;
+          animation-delay: 1s;
+          word-wrap: break-word;
         }
 
-        /* Media Queries for smaller screens */
-        @media (max-width: 1024px) {
-          .hero-title { font-size: clamp(60px, 15vw, 140px); }
-          .services-list { top: auto; bottom: 0px; left: 18%; font-size: clamp(12px, 2vw, 22px); }
-          .based-in { top: auto; bottom: 410px; right: 0%; font-size:clamp(14px, 8vw, 8px);letter-spacing: clamp(5px, 9vw, 8px); }
-          .portrait-wrap { top: 30%; width: 34vw; }
-          .description { width: 80%; bottom: -140px; font-size: clamp(12px, 2vw, 14px); }
-        }
+        .services-list { font-family: var(--mono); font-weight: 700; text-transform: uppercase; font-size: clamp(14px, 2vw, 18px); }
+        .based-in { font-family: var(--mono); font-weight: 800; font-size: clamp(14px, 2.5vw, 16px); letter-spacing: 2px; }
+        .description { font-family: var(--mono); font-size: clamp(12px, 1.5vw, 14px); line-height: 1.5; }
 
         @media (max-width: 768px) {
-          .hero-title { font-size: clamp(40px, 13vw, 140px); }
-          .services-list {top: auto; bottom: 135px; left: 14%; font-size: clamp(10px, 3vw, 18px); }
-          .based-in { top: auto; bottom: 440px; right: 5%; font-size: clamp(10px, 3vw, 12px); letter-spacing: 2px; }
-          .portrait-wrap { width: 34vw; top: 25%; }
-          .description { width: 90%;  font-size: clamp(10px, 2vw, 14px);bottom: 15px; }
+          .hero-container { flex-direction: column; align-items: center; text-align: center; }
+          .hero-title { font-size: clamp(30px, 8vw, 60px); margin-bottom: 0.5rem; }
+          .portrait-wrap { width: 60vw; margin-top: 1rem; }
+          .text-block { align-items: center; }
         }
 
         @media (max-width: 480px) {
-          .hero-title { font-size: clamp(40px, 13vw, 140px); }
-          .services-list {top: auto; bottom: 170px; left: 7%; font-size: clamp(10px, 3vw, 18px); }
-          .based-in { top: auto; bottom: 332px; right: 2%; font-size: clamp(10px, 2.5vw, 11px); letter-spacing: 1px; }
-          .portrait-wrap { width: 30vw; top: 25%; }
-          .description { width: 90%;  font-size: clamp(10px, 2vw, 14px);bottom: 80px; }
+          .hero-title { font-size: clamp(25px, 10vw, 50px); }
+          .portrait-wrap { width: 80vw; }
+          .services-list, .based-in, .description { font-size: clamp(12px, 3vw, 14px); }
         }
       `}</style>
 
       <div className="hero-wrap">
         <div className="hero-container">
-          <div className="visitor-count">
-            {String(visitorCount).padStart(4, "0")}
+          <div className="text-block">
+            <div className="visitor-count">
+              {String(visitorCount).padStart(4, "0")}
+            </div>
+
+            {/* Animated Title */}
+            <h1 className="hero-title" aria-label={titleText}>
+              {letters.map((letter, index) => (
+                <span className="letter-wrap" key={index} aria-hidden="true">
+                  <span
+                    className="letter"
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    {letter}
+                  </span>
+                </span>
+              ))}
+            </h1>
+
+            <div className="services-list">
+              /ART DIRECTION<br />
+              /WEB DESIGN (UX/UI)<br />
+              /WEB DEVELOPMENT
+            </div>
+
+            <div className="based-in">BASED IN INDIA</div>
+
+            <div className="description">
+              I'M EXPERIENCED WEB AND UX/UI DESIGNER,<br />
+              WHO DESIGN MEMORABLE WEB EXPERIENCES FOR<br />
+              BRANDS OF ALL SIZES
+            </div>
           </div>
 
-          <h1 className="hero-title">CREATIVE DESIGNER</h1>
-
+          {/* Portrait Image */}
           <div className="portrait-wrap">
             <img src="/assets/Hero.webp" alt="Portrait of designer" />
-          </div>
-
-          <div className="services-list">
-            /ART DIRECTION<br />
-            /WEB DESIGN (UX/UI)<br />
-            /WEB DEVELOPMENT
-          </div>
-
-          <div className="based-in">BASED IN INDIA</div>
-
-          <div className="description">
-            I'M EXPERIENCED WEB AND UX/UI DESIGNER,<br />
-            WHO DESIGN MEMORABLE WEB EXPERIENCES FOR<br />
-            BRANDS OF ALL SIZES
           </div>
         </div>
       </div>
