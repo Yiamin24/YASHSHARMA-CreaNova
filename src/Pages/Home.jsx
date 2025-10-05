@@ -5,6 +5,8 @@ import AboutMeTitle from '../components/AboutMeTitle';
 import AboutSection from './AboutSection';
 import WorksTitle from '../components/WorksTitle';
 import Work from './Work';
+import ServicesTitle from '../components/ServicesTitle';
+import Services from './Services';
 
 export default function Home() {
   return (
@@ -14,6 +16,8 @@ export default function Home() {
       <AboutSection/>
       <WorksTitle/>
       <Work/>
+      <ServicesTitle/>
+      <Services/>
     </div>
   );
 }
