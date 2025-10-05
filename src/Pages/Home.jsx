@@ -8,6 +8,8 @@ import Work from './Work';
 import ServicesTitle from '../components/ServicesTitle';
 import Services from './Services';
 
+import Connect from './Connect';
+
 export default function Home() {
   return (
     <div>
@@ -18,6 +20,8 @@ export default function Home() {
       <Work/>
       <ServicesTitle/>
       <Services/>
+     
+      <Connect/>
     </div>
   );
 }
