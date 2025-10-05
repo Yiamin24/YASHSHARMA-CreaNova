@@ -1,7 +1,11 @@
-import React from 'react'
+// Home.jsx
+import React from 'react';
+import HeroSection from '../components/HeroSection'; // adjust the path if needed
 
 export default function Home() {
   return (
-    <div>Home</div>
-  )
+    <div>
+      <HeroSection />
+    </div>
+  );
 }
