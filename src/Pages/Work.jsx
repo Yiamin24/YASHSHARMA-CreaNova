@@ -1,0 +1,387 @@
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+
+// --- CSS Styles ---
+const GlobalStyles = () => (
+  <style>{`
+    @import url('https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Mono:wght@400;700&display.swap');
+
+    .projects-section-container {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #E0E0E0;
+      overflow: hidden;
+      padding: 140px 20px 140px 20px;
+    }
+
+    .section-top-text {
+      position: absolute;
+      top: 20px;
+      width: 100%;
+      text-align: center;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1rem;
+      font-weight: 500;
+      color: rgba(34,34,34,0.85);
+      z-index: 50;
+      line-height: 1.4;
+    }
+
+    .section-bottom-text-container {
+      position: absolute;
+      bottom: 20px; /* buttons ke just upar */
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 50;
+    }
+
+    .section-bottom-text {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1rem;
+      font-weight: 500;
+      color: rgba(34,34,34,0.85);
+      line-height: 1.4;
+      text-align: center;
+      max-width: 700px;
+    }
+
+    .static-background-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 0;
+    }
+
+    .projects-title-watermark {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(10rem, 25vw, 24rem);
+      color: rgba(0, 0, 0, 0.07);
+      user-select: none;
+    }
+
+    .cube-scene {
+      width: 300px;
+      height: 300px;
+      perspective: 1500px;
+      margin-bottom: 2rem;
+      margin-top: 50px;
+    }
+
+    .cube {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      cursor: grab;
+    }
+
+    .cube-face {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background-color: #000;
+      color: white;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      border: 1px solid #333;
+      transition: transform 0.5s ease;
+    }
+
+    .cube-face a {
+      display: block;
+      width: 100%;
+      height: 100%;
+      text-decoration: none;
+      color: white;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 1;
+      transition: transform 0.3s ease;
+    }
+
+    .cube-face:hover .card-image {
+      transform: scale(1.05);
+    }
+
+    .card-content {
+      position: relative;
+      padding: 1rem;
+      z-index: 2;
+      width: 100%;
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
+    }
+
+    .card-title { 
+      font-family: 'Anton', sans-serif;
+      font-size: 2rem;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .face-front  { transform: rotateY(0deg) translateZ(150px); }
+    .face-back   { transform: rotateY(180deg) translateZ(150px); }
+    .face-right  { transform: rotateY(90deg) translateZ(150px); }
+    .face-left   { transform: rotateY(-90deg) translateZ(150px); }
+    .face-top    { transform: rotateX(90deg) translateZ(150px); }
+
+    .exploded-row {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+      position: absolute;
+      top: 80px;
+      z-index: 10;
+      align-items: flex-start;
+      justify-content: center;
+      width: 100%;
+      padding: 0 20px;
+      flex-wrap: nowrap;
+    }
+
+    .exploded-card {
+      width: 250px;
+      height: 200px;
+      position: relative;
+      background-color: #111;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      transform-origin: center;
+      cursor: pointer;
+    }
+
+    .exploded-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .exploded-card:hover img {
+      transform: scale(1.05) rotate(1deg);
+    }
+
+    .exploded-card .card-content {
+      padding: 0.5rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 100%);
+      border-radius: 0 0 15px 15px;
+    }
+
+    /* Joystick & Explode Button Container inside Work section */
+    .controls-container {
+      position: absolute;
+      bottom: 20px;
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      padding: 0 40px;
+      z-index: 100;
+      align-items: center;
+    }
+
+    .joystick-container {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: none;
+      background: rgba(0,0,0,0.1);
+      box-shadow: inset 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .joystick-thumb {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(145deg,#666,#222);
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+      pointer-events: none;
+      transition: transform 0.05s ease;
+    }
+
+    .explode-btn {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: none;
+      background-color: #c0392b;
+      color: white;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: inset 0 4px 8px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .explode-btn:hover {
+      background-color: #e74c3c;
+      transform: scale(1.05);
+    }
+  `}</style>
+);
+
+const projects = [
+  { id: 1, title: 'Generated Art', img: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=800&q=80', face: 'face-front' },
+  { id: 2, title: 'Veggie Taipei', img: 'https://images.unsplash.com/photo-1540914124281-3425879413d5?w=800&q=80', face: 'face-right' },
+  { id: 3, title: 'Ning Hunag', img: 'https://images.unsplash.com/photo-1558655146-364adaf1fcc9?w=800&q=80', face: 'face-back' },
+  { id: 4, title: 'Invasion', img: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=800&q=80', face: 'face-left' },
+  { id: 5, title: '3D Renders', img: 'https://images.unsplash.com/photo-1617099224168-5474a6a5b6f3?w=800&q=80', face: 'face-top' },
+];
+
+const Work = () => {
+  const rotateY = useMotionValue(0);
+  const rotateX = useMotionValue(20);
+  const rotateXClamped = useTransform(rotateX, val => val);
+  const [exploded, setExploded] = useState(false);
+  const joystickRef = useRef(null);
+  const thumbRef = useRef(null);
+  const velocity = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (exploded) return;
+    const controls = animate(rotateY, rotateY.get() + 360, {
+      duration: 25,
+      repeat: Infinity,
+      ease: "linear",
+    });
+    return () => controls.stop();
+  }, [exploded, rotateY]);
+
+  const handleJoystickMove = (e) => {
+    e.preventDefault();
+    if (exploded) return;
+    const rect = joystickRef.current.getBoundingClientRect();
+    const x = Math.max(Math.min(e.clientX - rect.left - rect.width / 2, 50), -50);
+    const y = Math.max(Math.min(e.clientY - rect.top - rect.height / 2, 50), -50);
+    rotateY.set(rotateY.get() + x * 0.25);
+    rotateX.set(rotateXClamped.get() - y * 0.25);
+    velocity.current = { x: x * 0.25, y: -y * 0.25 };
+    thumbRef.current.style.transform = `translate(${x}px, ${y}px)`;
+  };
+
+  const handleJoystickEnd = () => {
+    thumbRef.current.style.transform = `translate(0px,0px)`;
+    if (exploded) return;
+    const glide = () => {
+      velocity.current.x *= 0.95;
+      velocity.current.y *= 0.95;
+      rotateY.set(rotateY.get() + velocity.current.x);
+      rotateX.set(rotateXClamped.get() + velocity.current.y);
+      if (Math.abs(velocity.current.x) > 0.01 || Math.abs(velocity.current.y) > 0.01) {
+        requestAnimationFrame(glide);
+      }
+    };
+    glide();
+  };
+
+  return (
+    <>
+      <GlobalStyles />
+      <section className="projects-section-container">
+
+        <div className="section-top-text">
+          <div>I LOVE DESIGN & MOTION</div>
+          <div>AND BRING IDEAS TO LIFE WITH VIBE CODING</div>
+          <div>HERE'S SOME OF MY WORKS</div>
+        </div>
+
+        <div className="static-background-content">
+          <h1 className="projects-title-watermark">PROJECTS</h1>
+        </div>
+
+        {!exploded && (
+          <div className="cube-scene">
+            <motion.div
+              className="cube"
+              style={{ rotateY, rotateX: rotateXClamped }}
+            >
+              {projects.map(project => (
+                <div key={project.id} className={`cube-face ${project.face}`}>
+                  <a href={`/projects/${project.id}`} target="_blank" rel="noopener noreferrer">
+                    <img src={project.img} alt={project.title} className="card-image" />
+                    <div className="card-content">
+                      <h3 className="card-title">{project.title}</h3>
+                    </div>
+                  </a>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+        )}
+
+        {exploded && (
+          <div className="exploded-row">
+            {projects.map((project, i) => (
+              <motion.div key={project.id} className="exploded-card"
+                initial={{ opacity: 0, y: -150, scale: 0.5, rotate: -15 + i*5 }}
+                animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
+                transition={{ duration: 0.7, delay: i * 0.1, type: "spring", stiffness: 120 }}
+                whileHover={{ y: -10, scale: 1.05, rotate: 2 }}
+              >
+                <img src={project.img} alt={project.title} />
+                <div className="card-content">
+                  <h3 className="card-title">{project.title}</h3>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
+
+        {/* Controls and aligned bottom text */}
+        <div className="section-bottom-text-container">
+          <div className="section-bottom-text">I AM A DIGITAL DESIGNER BASED IN UTTARAKHAND, INDIA <br/>FOCUSED ON WEB EXPERIENCE & MOTION DESIGN</div>
+        </div>
+
+        <div className="controls-container">
+          {!exploded && (
+            <div
+              ref={joystickRef}
+              className="joystick-container"
+              onMouseMove={handleJoystickMove}
+              onMouseUp={handleJoystickEnd}
+              onMouseLeave={handleJoystickEnd}
+              onTouchMove={(e) => handleJoystickMove(e.touches[0])}
+              onTouchEnd={handleJoystickEnd}
+            >
+              <div ref={thumbRef} className="joystick-thumb" />
+            </div>
+          )}
+
+          <button className="explode-btn" onClick={() => setExploded(!exploded)}>
+            {exploded ? "Reset" : "Explode"}
+          </button>
+        </div>
+
+      </section>
+    </>
+  );
+};
+
+export default Work;
