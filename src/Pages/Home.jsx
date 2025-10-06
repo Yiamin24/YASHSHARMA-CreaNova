@@ -9,6 +9,7 @@ import ServicesTitle from '../components/ServicesTitle';
 import Services from './Services';
 
 import Connect from './Connect';
+import FooterX from '../components/FooterX';
 
 export default function Home() {
   return (
@@ -20,8 +21,10 @@ export default function Home() {
       <Work/>
       <ServicesTitle/>
       <Services/>
+      
      
       <Connect/>
+      <FooterX/>
     </div>
   );
 }
