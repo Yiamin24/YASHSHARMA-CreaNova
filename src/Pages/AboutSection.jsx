@@ -151,7 +151,7 @@ const AboutSection = () => {
 
         .intro-greeting h2 {
           text-transform: uppercase;
-          font-size: 1rem;
+          font-size: 2rem;
           line-height: 1.6;
           font-weight: 400;
         }
@@ -160,14 +160,15 @@ const AboutSection = () => {
           font-size: 0.875rem;
           text-transform: uppercase;
           letter-spacing: 2px;
-          font-weight: 400;
+          font-weight: 0;
           margin-top: 3.5rem;
           margin-bottom: 1.5rem;
+          margin-left : -60%;
         }
 
         .intro-experience p {
-          max-width: 550px;
-          margin: 0 auto;
+          max-width: 383px;
+          margin: 0 auto;          
           font-size: 1rem;
           line-height: 1.8;
           text-transform: uppercase;

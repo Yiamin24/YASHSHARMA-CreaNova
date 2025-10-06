@@ -45,7 +45,7 @@ const HeroSection = ({ servicesPosition = {} }) => {
           display: flex;
           align-items: center; 
           justify-content: center;
-          padding: 2rem 2rem;
+          padding: 2rem rem;
         }
 
         .hero-container {
@@ -216,7 +216,7 @@ const HeroSection = ({ servicesPosition = {} }) => {
           </div>
 
           <div className="portrait-wrap">
-            <img src="/assets/Hero.webp" alt="Portrait of Yash Sharma" />
+            <img src="/assets/OG.jpg" alt="Portrait of Yash Sharma" />
           </div>
 
           <div className="based-in">BASED IN INDIA</div>
