@@ -18,7 +18,7 @@ export default function Home() {
       <AboutMeTitle/>
       <AboutSection/>
       <WorksTitle/>
-      <Work/>
+      <Work/> 
       <ServicesTitle/>
       <Services/>
       <Connect/>
