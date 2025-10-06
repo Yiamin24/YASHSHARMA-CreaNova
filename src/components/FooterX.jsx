@@ -228,8 +228,8 @@ const FooterX = () => {
 
             <div className="footer-contact">
               <div className="contact-details">
-                <a href="tel:+380964683171" className="underline-anim origin-left">+38 096 468 31 71</a>
-                <a href="mailto:olha.lazarieva.0304@gmail.com" className="underline-anim origin-left">olha.lazarieva.0304@gmail.com</a>
+                <a href="tel:+91 8267848027" className="underline-anim origin-left">+91 82678 48027</a>
+                <a href="mailto:yashsharma02412@gmail.com" className="underline-anim origin-left">YashSharma02412@gmail.com</a>
               </div>
               <ul className="social-links-top">
                 <li>
@@ -264,8 +264,8 @@ const FooterX = () => {
             
             <div className="footer-address">
                 <p>Address:</p>
-                <p>14 Bohdana Khmelnytskoho Street</p>
-                <p>Kyiv, Ukraine</p>
+                <p>63/A Dangwal Marg</p>
+                <p>Dehradun, India</p>
             </div>
 
             <div className="footer-social-bottom">
