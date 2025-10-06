@@ -7,8 +7,8 @@ import WorksTitle from '../components/WorksTitle';
 import Work from './Work';
 import ServicesTitle from '../components/ServicesTitle';
 import Services from './Services';
-import Connect from './Connect';
-import FooterX from '../components/FooterX';
+//import Connect from './Connect';
+//import FooterX from '../components/FooterX';
 
 export default function Home() {
   return (
@@ -20,8 +20,8 @@ export default function Home() {
       <Work/>
       <ServicesTitle/>
       <Services/>
-      <Connect/>
-      <FooterX/>
+      
+      
     </div>
   );
 }
