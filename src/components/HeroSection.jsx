@@ -95,10 +95,10 @@ const HeroSection = ({ servicesPosition = {} }) => {
 
         .visitor-count {
           position: absolute;
-          top: -5%;
-          left: 2%;
+          top: -8%;
+          left: 5%;
           font-family: var(--mono);
-          font-size: clamp(12px, 2vw, 18px);
+          font-size: clamp(12px, 2vw, 24px);
           letter-spacing: 1px;
           z-index: 30;
           animation: fade-up-slight 1s ease-out 1s forwards;
@@ -143,7 +143,7 @@ const HeroSection = ({ servicesPosition = {} }) => {
         .based-in {
           position: absolute;
           top: 30%;
-          right: 1%;
+          right: 3.5%;
           transform: translate(50%, -50%);
           text-align: right;
           font-family: var(--mono);
@@ -159,7 +159,7 @@ const HeroSection = ({ servicesPosition = {} }) => {
         .description {
           position: absolute;
           bottom: -10%;
-          left: 3%;
+          left: 2%;
           transform: translateX(-50%);
           font-family: var(--mono);
           font-size: clamp(12px, 1vw, 14px);
@@ -216,7 +216,7 @@ const HeroSection = ({ servicesPosition = {} }) => {
           </div>
 
           <div className="portrait-wrap">
-            <img src="/assets/OG.jpg" alt="Portrait of Yash Sharma" />
+            <img src="/assets/Hero.webp" alt="Portrait of Yash Sharma" />
           </div>
 
           <div className="based-in">BASED IN INDIA</div>
