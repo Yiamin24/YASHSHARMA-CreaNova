@@ -1,6 +1,6 @@
 // Home.jsx
 import React from 'react';
-import HeroSection from '../components/HeroSection'; // adjust the path if needed
+// import HeroSection from '../components/HeroSection'; // adjust the path if needed
 import AboutMeTitle from '../components/AboutMeTitle';
 import AboutSection from './AboutSection';
 import WorksTitle from '../components/WorksTitle';
@@ -14,7 +14,7 @@ import Footer from '../components/Footer';
 export default function Home() {
   return (
     <div>
-      <HeroSection />
+      {/* <HeroSection /> */}
       <AboutMeTitle/>
       <AboutSection/>
       <WorksTitle/>
@@ -24,10 +24,7 @@ export default function Home() {
       <Connect/>
       <FooterX/>
       <Footer/>
-      
-      
-      
-    </div>
+      </div>
   );
 }
 

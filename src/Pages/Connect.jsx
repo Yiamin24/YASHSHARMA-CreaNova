@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 /* === Instagram Button === */
-const InstagramButton = () => (
+const InstagramButton = ({ onSubmit }) => (
   <>
     <style>{`
       @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
@@ -20,6 +20,9 @@ const InstagramButton = () => (
         padding-bottom: 4px;
         font-weight: 400;
         transition: color 0.3s ease, font-weight 0.3s ease;
+        background: none;
+        border: none;
+        cursor: pointer;
       }
       .instagram-btn:hover { color: #000; font-weight: 700; }
       .instagram-btn::after {
@@ -46,45 +49,39 @@ const InstagramButton = () => (
     `}</style>
 
     <div className="instagram-btn-container">
-      <a
-        href="https://instagram.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="instagram-btn"
-      >
+      <button type="submit" className="instagram-btn" onClick={onSubmit}>
         DISCUSS THE PROJECT
         <span className="arrow-container">
           <span className="arrow-default">↗</span>
           <span className="arrow-hover">→</span>
         </span>
-      </a>
+      </button>
     </div>
   </>
 );
 
-/* === Animated Curtain Title with Wave + Elastic Effect === */
+/* === Animated Curtain Title === */
 const AnimatedTitle = ({ text, delay = 0 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, margin: "-100px" });
 
-  const letters = text.split("").map((l) => (l === " " ? "\u00A0" : l));
-
   return (
     <motion.h1
       ref={ref}
+      className="animated-title"
       style={{
         overflow: "hidden",
         display: "flex",
-        flexWrap: "wrap",
+        flexWrap: "nowrap", // prevent wrapping
         justifyContent: "center",
         fontFamily: "'Bebas Neue', cursive",
         fontWeight: 700,
-        fontSize: "6rem",
         lineHeight: 1,
-        letterSpacing: "0.1em", // improved letter gap
+        letterSpacing: "0.05em",
+        whiteSpace: "nowrap", // ensure no wrapping
       }}
     >
-      {letters.map((char, idx) => (
+      {text.split("").map((char, idx) => (
         <motion.span
           key={idx}
           style={{ display: "inline-block", perspective: 1000 }}
@@ -99,10 +96,10 @@ const AnimatedTitle = ({ text, delay = 0 }) => {
             type: "spring",
             stiffness: 400,
             damping: 20,
-            mass: 0.7, // elastic bounce feel
+            mass: 0.7,
           }}
         >
-          {char}
+          {char === " " ? "\u00A0" : char}
         </motion.span>
       ))}
     </motion.h1>
@@ -113,11 +110,38 @@ const AnimatedTitle = ({ text, delay = 0 }) => {
 const Connect = () => {
   const [selectedBudget, setSelectedBudget] = useState(null);
   const [formData, setFormData] = useState({ name: "", phone: "", email: "", help: "" });
-  const budgetOptions = ["1K-5K", "5K-10K", "MORE"];
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const validateForm = () => {
+    const { name, phone, email, help } = formData;
+    if (!name || !phone || !email || !help || !selectedBudget) {
+      alert("Please fill all fields and select a project budget before submitting.");
+      return false;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email address.");
+      return false;
+    }
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(phone)) {
+      alert("Please enter a valid 10-digit phone number.");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      alert("Form submitted successfully!");
+      setFormData({ name: "", phone: "", email: "", help: "" });
+      setSelectedBudget(null);
+    }
   };
 
   return (
@@ -130,7 +154,7 @@ const Connect = () => {
           <AnimatedTitle text="GREAT COLLABORATION" delay={0.4} />
         </header>
 
-        <form className="connect-form" onSubmit={(e) => e.preventDefault()}>
+        <form className="connect-form" onSubmit={handleSubmit}>
           <div className="form-layout">
             {["name", "phone", "email", "help"].map((field, idx) => (
               <div key={idx} className="form-field">
@@ -153,7 +177,7 @@ const Connect = () => {
           <div className="budget-section">
             <label className="budget-label">PROJECT BUDGET (USD)</label>
             <div className="budget-options">
-              {budgetOptions.map((option) => (
+              {["1K-5K", "5K-10K", "MORE"].map((option) => (
                 <button
                   key={option}
                   type="button"
@@ -166,7 +190,7 @@ const Connect = () => {
             </div>
           </div>
 
-          <InstagramButton />
+          <InstagramButton onSubmit={handleSubmit} />
         </form>
       </div>
     </div>
@@ -189,10 +213,13 @@ const App = () => (
       .header-subtitle { letter-spacing:0.2em; font-size:0.875rem; margin-bottom:1.5rem; }
       .header-interlude { letter-spacing:0.4em; margin:1rem 0; font-size:0.875rem; }
 
-      .header-title { font-size:6rem; line-height:1; letter-spacing:0.1em; font-weight:700; } /* improved letter spacing */
-      @media (min-width:768px){ .header-title { font-size:7rem; letter-spacing:0.12em; } }
-      @media (min-width:1024px){ .header-title { font-size:8rem; letter-spacing:0.12em; } }
-      @media (min-width:1280px){ .header-title { font-size:9rem; letter-spacing:0.12em; } }
+      .animated-title { font-size:6rem; line-height:1; letter-spacing:0.1em; font-weight:700; text-align:center; white-space: nowrap; }
+      @media (max-width:768px) {
+        .animated-title {
+          font-size:3.5rem;
+          letter-spacing:0.02em;
+        }
+      }
 
       .connect-form { width:100%; max-width:56rem; }
       .form-layout { display:flex; flex-direction:column; gap:2rem; margin-bottom:3rem; }
