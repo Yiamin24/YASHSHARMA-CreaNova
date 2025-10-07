@@ -20,7 +20,7 @@ const AnimatedSection = ({ children, className }) => {
           }
         });
       },
-      { threshold: 0.2 } // Trigger when 20% of section is visible
+      { threshold: 0.2 }
     );
 
     observer.observe(currentRef);
@@ -31,7 +31,6 @@ const AnimatedSection = ({ children, className }) => {
 
   return (
     <div ref={sectionRef} className={`animated-section ${className || ""}`}>
-      {/* Shutter overlay for cinematic top-to-bottom reveal */}
       <div className="shutter-overlay"></div>
       {children}
     </div>
@@ -52,306 +51,227 @@ const AboutSection = () => {
           --font-display: 'Anton', sans-serif;
         }
 
-        /* ===== CONTAINER ===== */
+        *, *::before, *::after {
+          box-sizing: border-box;
+        }
+        
         .about-page-container {
-          background-color: var(--bg-color);
-          color: var(--text-color);
-          font-family: var(--font-mono);
-          width: 100%;
-          overflow-x: hidden;
+          background-color: var(--bg-color); color: var(--text-color);
+          font-family: var(--font-mono); width: 100%; overflow-x: hidden;
         }
-
-        /* ===== SHUTTER ANIMATION ===== */
         .shutter-overlay {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.9); /* Slight transparency for cinematic feel */
-          transform: translateY(-100%);
-          transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
-          z-index: 5;
+          position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+          background: rgba(0, 0, 0, 0.9); transform: translateY(-100%);
+          transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1); z-index: 5;
         }
-
-        /* Open shutter (top → bottom) */
-        .animated-section.is-visible .shutter-overlay {
-          transform: translateY(100%);
-        }
-
-        /* Close shutter (bottom → top) */
-        .animated-section.is-hidden .shutter-overlay {
-          transform: translateY(-100%);
-        }
-
-        /* ===== CONTENT REVEAL (FADE + BLUR) ===== */
+        .animated-section.is-visible .shutter-overlay { transform: translateY(100%); }
         .animated-section .reveal-item {
-          opacity: 0;
-          transform: translateY(-30px);
-          filter: blur(10px);
+          opacity: 0; transform: translateY(-30px); filter: blur(10px);
           transition: opacity 1s ease 0.4s, transform 1s ease 0.4s, filter 1s ease 0.4s;
         }
-
-        .animated-section.is-visible .reveal-item {
-          opacity: 1;
-          transform: translateY(0);
-          filter: blur(0);
-        }
-
-        .animated-section.is-hidden .reveal-item {
-          opacity: 0;
-          transform: translateY(-30px);
-          filter: blur(10px);
-        }
-
-        /* ===== SECTION BASE ===== */
+        .animated-section.is-visible .reveal-item { opacity: 1; transform: translateY(0); filter: blur(0); }
+        
         .about-section {
           width: 100%;
           min-height: 100vh;
           padding: 5rem 2rem;
           display: grid;
-          align-items: center;
           position: relative;
           overflow: hidden;
+          max-width: 1440px; 
+          margin-inline: auto;
         }
 
         /* ===== INTRO SECTION ===== */
-        .about-section-intro {
-          place-items: center;
-        }
-
-        .about-header {
-          position: absolute;
-          top: 2rem;
-          left: 2rem;
-          font-size: 0.875rem;
-          letter-spacing: 1px;
-          text-transform: uppercase;
-        }
-
-        .intro-content-wrapper {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-        }
-
-        .intro-image {
-          width: 100%;
-          max-width: 300px;
-          aspect-ratio: 1 / 1;
-          margin-bottom: 1.5rem;
-        }
-
-        .intro-image img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-
-        .intro-greeting h2 {
-          text-transform: uppercase;
-          font-size: 2rem;
-          line-height: 1.6;
-          font-weight: 400;
-        }
-
+        .about-section-intro { place-items: center; }
+        .about-header { position: absolute; top: 2rem; left: 2rem; font-size: 0.875rem; letter-spacing: 1px; text-transform: uppercase; }
+        .intro-content-wrapper { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .intro-image { width: 100%; max-width: 300px; aspect-ratio: 1 / 1; margin-bottom: 1.5rem; }
+        .intro-image img { width: 100%; height: 100%; object-fit: cover; }
+        .intro-greeting h2 { text-transform: uppercase; font-size: 2rem; line-height: 1.6; font-weight: 400; }
+        .intro-experience { width: 100%; max-width: 450px; }
         .intro-experience h3 {
-          font-size: 0.875rem;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          font-weight: 0;
-          margin-top: 3.5rem;
-          margin-bottom: 1.5rem;
-          margin-left : -60%;
+          font-size: 0.875rem; text-transform: uppercase; letter-spacing: 2px;
+          font-weight: 400; margin-top: 3.5rem; margin-bottom: 1.5rem;
         }
-
-        .intro-experience p {
-          max-width: 383px;
-          margin: 0 auto;          
-          font-size: 1rem;
-          line-height: 1.8;
-          text-transform: uppercase;
-        }
+        .intro-experience p { margin: 0 auto; font-size: 1rem; line-height: 1.8; text-transform: uppercase; }
 
         /* ===== PHILOSOPHY SECTION ===== */
         .about-section-philosophy {
-          grid-template-columns: repeat(12, 1fr);
-          gap: 0 2rem;
-          align-content: center;
+            align-content: center;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: auto auto;
+            gap: 2rem 2rem;
         }
-
         .philosophy-headline {
-          grid-column: 2 / span 6;
-          grid-row: 1 / span 3;
-          align-self: start;
-          margin-top: -2rem;
-          font-family: var(--font-display);
-          font-size: clamp(2.5rem, 7vw, 6rem);
-          line-height: 1.1;
-          text-transform: uppercase;
-          letter-spacing: clamp(2px, 0.5vw, 6px);
+            grid-column: 2 / span 8;
+            grid-row: 1;
+            align-self: end;
+            font-family: var(--font-mono);
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            line-height: 1.25; letter-spacing: 1px;
+            text-transform: uppercase; font-weight: 400;
         }
-
         .philosophy-text-block-1 {
-          grid-column: 8 / span 4;
-          grid-row: 1;
-          align-self: end;
-          margin-bottom: 2rem;
+            grid-column: 7 / span 5;
+            grid-row: 1;
+            align-self: end;
+            padding-bottom: 2rem;
         }
-
         .philosophy-text-block-2 {
-          grid-column: 8 / span 4;
-          grid-row: 2;
-          align-self: start;
+            grid-column: 7 / span 5;
+            grid-row: 2;
+            align-self: start;
         }
-
+        .philosophy-text-block-1 p, .philosophy-text-block-2 p {
+            font-size: clamp(0.9rem, 1.2vw, 1rem); line-height: 1.8;
+            text-transform: uppercase; max-width: 500px;
+        }
         .philosophy-text-block-2 h3 {
-          font-size: 0.8rem;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          margin-bottom: 1rem;
-          font-weight: 400;
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
+            margin-bottom: 1rem; font-weight: 400;
         }
 
-        .philosophy-text-block-1 p,
-        .philosophy-text-block-2 p {
-          font-size: clamp(0.9rem, 1.5vw, 1rem);
-          line-height: 1.8;
-          text-transform: uppercase;
-          max-width: 450px;
-        }
-
-        /* ===== LIFESTYLE SECTION ===== */
+        /* ===== LIFESTYLE SECTION (Image Alignment & Staggered Look) ===== */
         .about-section-lifestyle {
-          grid-template-columns: repeat(12, 1fr);
-          gap: 2rem;
-          align-content: center;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: auto auto auto; /* Added more rows for image control */
+            align-items: center;
+            gap: 1rem 2rem; /* Adjusted vertical gap */
+            align-content: center;
         }
-
-        .lifestyle-left-col {
-          grid-column: 2 / span 5;
-          align-self: center;
+        .lifestyle-image-container {
+            grid-column: 2 / span 5;
+            grid-row: 1 / span 2; /* Allow image container to span multiple rows */
+            display: grid; /* Make container a grid itself */
+            grid-template-columns: 1fr 1fr; /* Two columns for images */
+            grid-template-rows: auto auto; /* Two rows for images */
+            gap: 1.5rem;
+            align-items: start; /* Align items to the start of their grid cells */
+            justify-items: center; /* Center images horizontally within their cells */
         }
-
-        .lifestyle-image-stack {
-          display: grid;
-          grid-template-columns: repeat(5, 1fr);
-          grid-template-rows: repeat(5, 1fr);
-          max-width: 450px;
-          aspect-ratio: 1 / 1;
-          margin: 0 auto;
+        .lifestyle-image-1 { /* First image specific positioning */
+            grid-column: 1 / span 1;
+            grid-row: 1;
+            align-self: end; /* Align to bottom of its implicit row */
+            margin-bottom: 0; /* Remove default margin */
+            margin-top: -30px; /* Lift first image */
         }
-
-        .lifestyle-image-1 {
-          grid-column: 1 / span 4;
-          grid-row: 1 / span 4;
+        .lifestyle-image-2 { /* Second image specific positioning */
+            grid-column: 2 / span 1;
+            grid-row: 2;
+            align-self: start; /* Align to top of its implicit row */
+            margin-top: 30px; /* Push second image down */
         }
-
-        .lifestyle-image-2 {
-          grid-column: 3 / span 3;
-          grid-row: 2 / span 4;
-          z-index: 2;
-        }
-
-        .lifestyle-image-1 img,
-        .lifestyle-image-2 img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-        }
-
-        .lifestyle-contact {
-          text-align: center;
-          margin-top: 3rem;
-        }
-
-        .lifestyle-contact a {
-          font-size: clamp(0.9rem, 1.5vw, 1rem);
-          text-transform: uppercase;
-          color: var(--text-color);
-          text-decoration: none;
-          letter-spacing: 2px;
+        .lifestyle-image-container img {
+            width: 100%; 
+            max-width: 220px; 
+            height: auto;
+            aspect-ratio: 3 / 4; 
+            object-fit: cover;
         }
 
         .lifestyle-text-col {
-          grid-column: 8 / span 4;
-          align-self: center;
-          display: flex;
-          flex-direction: column;
-          gap: 5rem;
-        }
-
-        .lifestyle-text-col h3 {
-          font-size: 0.8rem;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          margin-bottom: 1rem;
-          font-weight: 400;
-        }
-
-        .lifestyle-text-col p {
-          font-size: clamp(0.9rem, 1.5vw, 1rem);
-          line-height: 1.8;
-          text-transform: uppercase;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 900px) {
-          .about-section {
-            padding: 6rem 1rem;
-            min-height: auto;
-          }
-          .about-section-philosophy,
-          .about-section-lifestyle {
-            grid-template-columns: 1fr;
-            gap: 4rem;
-          }
-          .philosophy-headline,
-          .philosophy-text-block-1,
-          .philosophy-text-block-2,
-          .lifestyle-left-col,
-          .lifestyle-text-col {
-            grid-column: 1 / -1;
-            grid-row: auto;
-            margin-top: 0;
-            margin-bottom: 0;
+            grid-column: 8 / span 4;
+            grid-row: 1 / span 2; /* Text column spans two rows to align with images */
+            display: flex; flex-direction: column; gap: 3.5rem;
             align-self: center;
-          }
-          .philosophy-headline {
+        }
+        .lifestyle-contact {
+            grid-column: 2 / span 5;
+            grid-row: 3; /* Positioned below images for desktop */
+            align-self: start; 
             text-align: center;
+            padding-top: 3rem; /* Space between images and link */
+        }
+        .lifestyle-text-col h3 {
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
+            margin-bottom: 1rem; font-weight: 400;
+        }
+        .lifestyle-text-col p {
+            font-size: clamp(0.9rem, 1.2vw, 1rem);
+            line-height: 1.8; text-transform: uppercase;
+        }
+        .lifestyle-contact a {
+            position: relative; display: inline-flex; align-items: center;
+            gap: 0.5em; padding-bottom: 5px;
+            font-size: clamp(0.9rem, 1.5vw, 1rem); text-transform: uppercase;
+            color: var(--text-color); text-decoration: none; letter-spacing: 1.5px;
+        }
+        .lifestyle-contact a::after {
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 100%; height: 1px; background-color: var(--text-color);
+            transform: scaleX(0); transform-origin: right;
+            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .lifestyle-contact a:hover::after {
+            transform: scaleX(1); transform-origin: left;
+        }
+        .link-arrow { display: inline-block; position: relative; width: 1.2em; height: 1.2em; }
+        .arrow-default, .arrow-hover {
+            position: absolute; top: 0; left: 0;
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 100%; height: 100%;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        .arrow-hover { transform: translateY(100%); opacity: 0; }
+        .lifestyle-contact a:hover .arrow-default { transform: translateY(-100%); opacity: 0; }
+        .lifestyle-contact a:hover .arrow-hover { transform: translateY(0); opacity: 1; }
+
+        /* ===== MOBILE RESPONSIVE ===== */
+        @media (max-width: 900px) {
+          .about-section { min-height: auto; padding: 6rem 1rem; }
+          .about-section-philosophy, .about-section-lifestyle {
+              grid-template-columns: 1fr; gap: 4rem;
           }
-          .philosophy-text-block-1,
-          .philosophy-text-block-2,
-          .lifestyle-text-col {
-            text-align: left;
+          .philosophy-headline, .philosophy-text-block-1, .philosophy-text-block-2,
+          .lifestyle-image-container, .lifestyle-text-col, .lifestyle-contact { 
+            grid-column: 1 / -1; grid-row: auto; text-align: left;
           }
+           .lifestyle-contact { text-align: center; padding-top: 0; } /* Reset padding for mobile */
+           .intro-experience { text-align: center; }
+
+           /* -- Mobile Image & Contact Order Fix -- */
+           .lifestyle-image-container { 
+                grid-row: 1; /* Images come first */
+                display: flex; /* Revert to flex for mobile */
+                flex-direction: row;
+                justify-content: center;
+                gap: 1.5rem;
+                padding-bottom: 2rem;
+            }
+            .lifestyle-image-1, .lifestyle-image-2 { /* Revert image positioning */
+                margin-top: 0;
+                margin-bottom: 0;
+                width: 50%; /* Each image takes 50% */
+                max-width: 220px;
+            }
+            .lifestyle-text-col { grid-row: 2; } /* Text comes after images */
+            .lifestyle-contact { grid-row: 3; } /* Contact link comes last */
         }
       `}</style>
 
+      {/* JSX is updated to separate image elements */}
       <div className="about-page-container">
-        {/* Section 1: Intro */}
         <AnimatedSection className="about-section about-section-intro">
-          <header className="about-header reveal-item">ABOUT ME</header>
-          <div className="intro-content-wrapper">
-            <div className="intro-image reveal-item">
-              <img src="/assets/Hero.webp" alt="Portrait of Yash Sharma" />
+            <header className="about-header reveal-item">ABOUT ME</header>
+            <div className="intro-content-wrapper">
+                <div className="intro-image reveal-item">
+                    <img src="/assets/Hero.webp" alt="Portrait of Yash Sharma" />
+                </div>
+                <div className="intro-greeting reveal-item">
+                    <h2>HELLO!</h2>
+                    <h2>I'M YASH SHARMA</h2>
+                </div>
+                <div className="intro-experience">
+                    <h3 className="reveal-item">MY EXPERIENCE ↘</h3>
+                    <p className="reveal-item">
+                        A SENIOR WEB DEVELOPER WITH OVER 5 YEARS OF EXPERIENCE IN CREATING DIGITAL PRODUCTS FOR INTERNATIONAL COMPANIES.
+                    </p>
+                </div>
             </div>
-            <div className="intro-greeting reveal-item">
-              <h2>HELLO!</h2>
-              <h2>I'M YASH SHARMA</h2>
-            </div>
-            <div className="intro-experience">
-              <h3 className="reveal-item">MY EXPERIENCE ↘</h3>
-              <p className="reveal-item">
-                A SENIOR WEB DEVELOPER WITH OVER 5 YEARS OF EXPERIENCE IN CREATING DIGITAL PRODUCTS FOR INTERNATIONAL COMPANIES.
-              </p>
-            </div>
-          </div>
         </AnimatedSection>
 
-        {/* Section 2: Philosophy */}
         <AnimatedSection className="about-section about-section-philosophy">
           <h1 className="philosophy-headline reveal-item">
             IT'S NOT JUST A<br />
@@ -371,20 +291,11 @@ const AboutSection = () => {
           </div>
         </AnimatedSection>
 
-        {/* Section 3: Lifestyle */}
         <AnimatedSection className="about-section about-section-lifestyle">
-          <div className="lifestyle-left-col">
-            <div className="lifestyle-image-stack reveal-item">
-              <div className="lifestyle-image-1">
-                <img src="/assets/Hero.webp" alt="Lifestyle portrait" />
-              </div>
-              <div className="lifestyle-image-2">
-                <img src="/assets/Hero.webp" alt="Lifestyle architecture" />
-              </div>
-            </div>
-            <div className="lifestyle-contact reveal-item">
-              <a href="#contact">LETS CONTACT ↗</a>
-            </div>
+          <div className="lifestyle-image-container reveal-item">
+            {/* Images are now separate for individual grid control */}
+            <img src="/assets/Hero.webp" alt="Lifestyle portrait" className="lifestyle-image-1" />
+            <img src="/assets/Hero.webp" alt="Lifestyle architecture" className="lifestyle-image-2" />
           </div>
           <div className="lifestyle-text-col">
             <div className="reveal-item">
@@ -398,6 +309,15 @@ const AboutSection = () => {
                 EVERY PROJECT FOR ME IS MORE THAN A TASK. IT’S A STORY THAT I HELP TELL THROUGH DESIGN. I BELIEVE THAT A GOOD INTERFACE IS NOT JUST ABOUT COLORS AND FONTS, BUT ABOUT THE FEELINGS IT EVOKES.
               </p>
             </div>
+          </div>
+          <div className="lifestyle-contact reveal-item">
+              <a href="#contact">
+                <span>LETS CONTACT</span>
+                <span className="link-arrow">
+                  <span className="arrow-default">↗</span>
+                  <span className="arrow-hover">→</span>
+                </span>
+              </a>
           </div>
         </AnimatedSection>
       </div>
