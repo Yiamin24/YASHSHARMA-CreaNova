@@ -1,6 +1,6 @@
 // Home.jsx
 import React from 'react';
-// import HeroSection from '../components/HeroSection'; // adjust the path if needed
+import HeroSection from '../components/HeroSection'; 
 import AboutMeTitle from '../components/AboutMeTitle';
 import AboutSection from './AboutSection';
 import WorksTitle from '../components/WorksTitle';
@@ -14,20 +14,42 @@ import Footer from '../components/Footer';
 export default function Home() {
   return (
     <div>
-      {/* <HeroSection /> */}
-      <AboutMeTitle/>
-      <AboutSection/>
-      <WorksTitle/>
-      <Work/> 
-      <ServicesTitle/>
-      <Services/>
-      <Connect/>
-      <FooterX/>
-      <Footer/>
-      </div>
+      {/* === Hero Section === */}
+      <section id="home">
+        <HeroSection />
+      </section>
+
+      {/* === About Section === */}
+      <section id="about">
+        <AboutMeTitle />
+        <AboutSection />
+      </section>
+
+      {/* === Works Section === */}
+      <section id="works">
+        <WorksTitle />
+        <Work /> 
+      </section>
+
+      {/* === Services Section === */}
+      <section id="services">
+        <ServicesTitle />
+        <Services />
+      </section>
+
+      {/* === Connect Section === */}
+      <section id="connect">
+        <Connect />
+      </section>
+
+      {/* === Footer Sections === */}
+      <section id="footerx">
+        <FooterX />
+      </section>
+
+      <section id="footer">
+        <Footer />
+      </section>
+    </div>
   );
 }
-
-
-     
-      

@@ -33,12 +33,20 @@ const ScrambledLink = ({ children, href }) => {
     setText(originalText);
   };
 
+  // Smooth scroll function
+  const handleClick = (e) => {
+    e.preventDefault();
+    const el = document.querySelector(href);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <a
       href={href}
       className="scramble-link"
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
     >
       {text}
     </a>
@@ -87,30 +95,14 @@ const FooterX = () => {
         .footer-address { grid-area: address; align-self: end; text-align: right; }
         .footer-social-bottom { grid-area: social-bottom; display: flex; justify-content: space-between; align-items: flex-end; }
 
-        .footer-container a {
-          color: var(--footer-text);
-          text-decoration: none;
-          text-transform: uppercase;
-        }
+        .footer-container a { color: var(--footer-text); text-decoration: none; text-transform: uppercase; }
 
-        .footer-nav ul, .footer-contact ul {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-        }
+        .footer-nav ul, .footer-contact ul { list-style: none; padding: 0; margin: 0; }
+        .footer-nav li { margin-bottom: 0.75rem; }
 
-        .footer-nav li {
-          margin-bottom: 0.75rem;
-        }
-
-        .contact-details {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          gap: 0.5rem;
-        }
+        .contact-details { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; }
         .contact-details a { font-size: clamp(1.2rem, 3vw, 2rem); font-weight: 700; text-transform: none; }
-        
+
         .footer-contact .social-links-top { margin-top: 2rem; }
         .footer-contact .social-links-top li { display: inline-block; margin-left: 2rem; }
         .footer-contact .social-links-top a { font-size: clamp(0.9rem, 1.5vw, 1.1rem); letter-spacing: 1px; }
@@ -145,25 +137,12 @@ const FooterX = () => {
           text-transform: uppercase;
           transition: color 0.3s ease;
         }
-        .scramble-link:hover {
-          color: #000;
-        }
+        .scramble-link:hover { color: #000; }
 
         /* Arrow Animation for Social Links */
         .arrow-animated-link { display: inline-flex; align-items: center; }
-        .arrow-container {
-          display: inline-block;
-          position: relative;
-          width: 1.2em;
-          height: 1em;
-          margin-left: 0.5em;
-        }
-        .arrow-default, .arrow-hover {
-          position: absolute;
-          left: 0;
-          top: 0;
-          transition: transform 0.3s ease, opacity 0.3s ease;
-        }
+        .arrow-container { display: inline-block; position: relative; width: 1.2em; height: 1em; margin-left: 0.5em; }
+        .arrow-default, .arrow-hover { position: absolute; left: 0; top: 0; transition: transform 0.3s ease, opacity 0.3s ease; }
         .arrow-hover { transform: translateX(-10px); opacity: 0; }
         .arrow-animated-link:hover .arrow-default { transform: translateX(10px); opacity: 0; }
         .arrow-animated-link:hover .arrow-hover { transform: translateX(0); opacity: 1; }
@@ -211,8 +190,8 @@ const FooterX = () => {
           <nav className="footer-nav">
             <ul>
               <li><ScrambledLink href="#about">ABOUT ME</ScrambledLink></li>
-              <li><ScrambledLink href="#services">SERVICES</ScrambledLink></li>
               <li><ScrambledLink href="#works">WORKS</ScrambledLink></li>
+              <li><ScrambledLink href="#services">SERVICES</ScrambledLink></li>
             </ul>
           </nav>
 
