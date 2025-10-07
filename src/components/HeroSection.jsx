@@ -18,7 +18,6 @@ const HeroSection = ({ servicesPosition = {} }) => {
     .split("")
     .map((letter) => (letter === " " ? "\u00A0" : letter));
 
-  // Default values if no props are passed
   const { top = "50%", left = "100%", transform = "translate(-50%, -50%)" } = servicesPosition;
 
   return (
@@ -45,14 +44,14 @@ const HeroSection = ({ servicesPosition = {} }) => {
           display: flex;
           align-items: center; 
           justify-content: center;
-          padding: 2rem rem;
+          padding: 2rem 0;
         }
 
         .hero-container {
           width: 100%;
           max-width: 1400px;
           position: relative; 
-          display: fill;
+          display: flex;
           align-items: center;
           justify-content: center;
           min-height: 500px;
@@ -62,10 +61,12 @@ const HeroSection = ({ servicesPosition = {} }) => {
           0% { transform: translateY(-120%); opacity: 0; }
           100% { transform: translateY(0); opacity: 1; }
         }
+
         @keyframes image-fade-slide-up {
           0% { opacity: 0; transform: translateY(20px); }
           100% { opacity: 1; transform: translateY(0); }
         }
+
         @keyframes fade-up-slight {
           0% { opacity: 0; transform: translateY(10px); }
           100% { opacity: 1; transform: translateY(0); }
@@ -125,8 +126,8 @@ const HeroSection = ({ servicesPosition = {} }) => {
           display: block;
         }
 
-        /* --- Services List (Now controllable) --- */
-        .services-list {
+        /* --- HERO SERVICES LIST (unique) --- */
+        .hero-services-list {
           position: absolute;
           bottom: 30%;
           left: -13%;
@@ -159,7 +160,7 @@ const HeroSection = ({ servicesPosition = {} }) => {
         .description {
           position: absolute;
           bottom: -10%;
-          left: 2%;
+          left: 1%;
           transform: translateX(-50%);
           font-family: var(--mono);
           font-size: clamp(12px, 1vw, 14px);
@@ -182,7 +183,7 @@ const HeroSection = ({ servicesPosition = {} }) => {
             min-height: auto;
           }
           .hero-title { font-size: clamp(2.5rem, 18vw, 6rem); position: static; order: 2; margin: 2rem 0; }
-          .services-list, .based-in, .portrait-wrap, .visitor-count, .description {
+          .hero-services-list, .based-in, .portrait-wrap, .visitor-count, .description {
             position: static; transform: none; top: auto; left: auto; right: auto; bottom: auto; text-align: center;
           }
         }
@@ -207,7 +208,7 @@ const HeroSection = ({ servicesPosition = {} }) => {
             ))}
           </h1>
 
-          <div className="services-list">
+          <div className="hero-services-list">
             /ART DIRECTION
             <br />
             /WEB DESIGN (UX/UI)
@@ -216,7 +217,7 @@ const HeroSection = ({ servicesPosition = {} }) => {
           </div>
 
           <div className="portrait-wrap">
-            <img src="/assets/Hero.webp" alt="Portrait of Yash Sharma" />
+            <img src="/assets/OG.jpg" alt="Portrait of Yash Sharma" />
           </div>
 
           <div className="based-in">BASED IN INDIA</div>
