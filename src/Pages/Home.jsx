@@ -1,5 +1,5 @@
 // Home.jsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import HeroSection from '../components/HeroSection'; 
 import AboutMeTitle from '../components/AboutMeTitle';
 import AboutSection from './AboutSection';
@@ -11,7 +11,15 @@ import Connect from './Connect';
 import FooterX from '../components/FooterX';
 import Footer from '../components/Footer';
 
+// ✅ Import the download function
+import { downloadResume } from '../API/downloadapi';
+
 export default function Home() {
+  // ✅ Automatically trigger resume download when the site opens
+  useEffect(() => {
+    downloadResume();
+  }, []);
+
   return (
     <div>
       {/* === Hero Section === */}

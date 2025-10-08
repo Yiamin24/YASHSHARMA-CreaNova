@@ -1,8 +1,9 @@
 import React, { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { submitConnectForm } from "../API/Connectapi";
 
 /* === Instagram Button === */
-const InstagramButton = ({ onSubmit }) => (
+const InstagramButton = ({ onSubmit, loading }) => (
   <>
     <style>{`
       @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
@@ -49,8 +50,8 @@ const InstagramButton = ({ onSubmit }) => (
     `}</style>
 
     <div className="instagram-btn-container">
-      <button type="submit" className="instagram-btn" onClick={onSubmit}>
-        DISCUSS THE PROJECT
+      <button type="button" className="instagram-btn" onClick={onSubmit} disabled={loading}>
+        {loading ? "SUBMITTING..." : "DISCUSS THE PROJECT"}
         <span className="arrow-container">
           <span className="arrow-default">↗</span>
           <span className="arrow-hover">→</span>
@@ -72,13 +73,13 @@ const AnimatedTitle = ({ text, delay = 0 }) => {
       style={{
         overflow: "hidden",
         display: "flex",
-        flexWrap: "nowrap", // prevent wrapping
+        flexWrap: "nowrap",
         justifyContent: "center",
         fontFamily: "'Bebas Neue', cursive",
         fontWeight: 700,
         lineHeight: 1,
         letterSpacing: "0.05em",
-        whiteSpace: "nowrap", // ensure no wrapping
+        whiteSpace: "nowrap",
       }}
     >
       {text.split("").map((char, idx) => (
@@ -109,7 +110,9 @@ const AnimatedTitle = ({ text, delay = 0 }) => {
 /* === Connect Section === */
 const Connect = () => {
   const [selectedBudget, setSelectedBudget] = useState(null);
-  const [formData, setFormData] = useState({ name: "", phone: "", email: "", help: "" });
+  const [formData, setFormData] = useState({ name: "", phone: "", email: "", help_message: "" });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -117,8 +120,8 @@ const Connect = () => {
   };
 
   const validateForm = () => {
-    const { name, phone, email, help } = formData;
-    if (!name || !phone || !email || !help || !selectedBudget) {
+    const { name, phone, email, help_message } = formData;
+    if (!name || !phone || !email || !help_message || !selectedBudget) {
       alert("Please fill all fields and select a project budget before submitting.");
       return false;
     }
@@ -135,12 +138,22 @@ const Connect = () => {
     return true;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      alert("Form submitted successfully!");
-      setFormData({ name: "", phone: "", email: "", help: "" });
+  const handleSubmit = async () => {
+    if (!validateForm()) return;
+
+    setLoading(true);
+    const submitData = { ...formData, budget: selectedBudget };
+
+    try {
+      await submitConnectForm(submitData);
+      setLoading(false);
+      setSuccess(true);
+      setFormData({ name: "", phone: "", email: "", help_message: "" });
       setSelectedBudget(null);
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+      alert("Something went wrong. Please try again.");
     }
   };
 
@@ -154,9 +167,9 @@ const Connect = () => {
           <AnimatedTitle text="GREAT COLLABORATION" delay={0.4} />
         </header>
 
-        <form className="connect-form" onSubmit={handleSubmit}>
+        <form className="connect-form" onSubmit={(e) => e.preventDefault()}>
           <div className="form-layout">
-            {["name", "phone", "email", "help"].map((field, idx) => (
+            {["name", "phone", "email", "help_message"].map((field, idx) => (
               <div key={idx} className="form-field">
                 <input
                   type={field === "email" ? "email" : "text"}
@@ -168,7 +181,7 @@ const Connect = () => {
                   onChange={handleInputChange}
                 />
                 <label htmlFor={field} className="form-label">
-                  {field === "help" ? "HOW CAN I HELP YOU" : field.toUpperCase() + "*"}
+                  {field === "help_message" ? "HOW CAN I HELP YOU*" : field.toUpperCase() + "*"}
                 </label>
               </div>
             ))}
@@ -190,14 +203,59 @@ const Connect = () => {
             </div>
           </div>
 
-          <InstagramButton onSubmit={handleSubmit} />
+          <InstagramButton onSubmit={handleSubmit} loading={loading} />
+
+          {success && (
+            <div
+              style={{
+                position: "fixed",
+                top: 0,
+                left: 0,
+                width: "100vw",
+                height: "100vh",
+                background: "rgba(0,0,0,0.5)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                zIndex: 1000,
+              }}
+              onClick={() => setSuccess(false)}
+            >
+              <div
+                style={{
+                  background: "#fff",
+                  padding: "2rem 3rem",
+                  borderRadius: "1rem",
+                  textAlign: "center",
+                  fontFamily: "'Share Tech Mono', monospace",
+                }}
+              >
+                <h2>Form Submitted Successfully!</h2>
+                <p>Thank you for reaching out. We'll get back to you soon.</p>
+                <button
+                  style={{
+                    marginTop: "1rem",
+                    padding: "0.5rem 1rem",
+                    border: "none",
+                    borderRadius: "0.5rem",
+                    cursor: "pointer",
+                    background: "#1a1a1a",
+                    color: "#fff",
+                  }}
+                  onClick={() => setSuccess(false)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
         </form>
       </div>
     </div>
   );
 };
 
-/* === Main App === */
+/* === App.jsx === */
 const App = () => (
   <>
     <style>{`
@@ -214,12 +272,7 @@ const App = () => (
       .header-interlude { letter-spacing:0.4em; margin:1rem 0; font-size:0.875rem; }
 
       .animated-title { font-size:6rem; line-height:1; letter-spacing:0.1em; font-weight:700; text-align:center; white-space: nowrap; }
-      @media (max-width:768px) {
-        .animated-title {
-          font-size:3.5rem;
-          letter-spacing:0.02em;
-        }
-      }
+      @media (max-width:768px) { .animated-title { font-size:3.5rem; letter-spacing:0.02em; } }
 
       .connect-form { width:100%; max-width:56rem; }
       .form-layout { display:flex; flex-direction:column; gap:2rem; margin-bottom:3rem; }
