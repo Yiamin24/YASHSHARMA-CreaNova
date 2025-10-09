@@ -266,7 +266,7 @@ const AboutSection = () => {
                 <div className="intro-experience">
                     <h3 className="reveal-item">MY EXPERIENCE ↘</h3>
                     <p className="reveal-item">
-                        A SENIOR WEB DEVELOPER WITH OVER 5 YEARS OF EXPERIENCE IN CREATING DIGITAL PRODUCTS FOR INTERNATIONAL COMPANIES.
+                        A web developer with 1 year of experience crafting exquisite, high-fidelity, and immersive digital experiences that transform visionary concepts into reality.
                     </p>
                 </div>
             </div>
@@ -274,19 +274,19 @@ const AboutSection = () => {
 
         <AnimatedSection className="about-section about-section-philosophy">
           <h1 className="philosophy-headline reveal-item">
-            IT'S NOT JUST A<br />
-            PROFESSION - IT'S A WAY<br />
+            IT'S NOT JUST A CODE<br />
+             IT'S A WAY<br/>
             OF THINKING.
           </h1>
           <div className="philosophy-text-block-1 reveal-item">
             <p>
-              MY WORK IS PART OF MY LIFESTYLE. AS A UX/UI DESIGNER, I AM CONSTANTLY OBSERVING THE WORLD: I NOTICE HOW PEOPLE INTERACT WITH SPACE, TECHNOLOGY, OBJECTS.
+              My work reflects how I approach challenges. As a web developer with 1 year of experience, I constantly explore how users interact with digital products, striving to create seamless, intuitive, and meaningful experiences..
             </p>
           </div>
           <div className="philosophy-text-block-2 reveal-item">
             <h3>MY PHILOSOPHY ↘</h3>
             <p>
-              I VALUE CLARITY, MEANING, AND FUNCTIONALITY – BOTH IN DESIGN AND IN LIFE. I AM CLOSE TO THE IDEA OF CONSCIOUS MINIMALISM: LEAVING ONLY WHAT MAKES SENSE AND WORKS FOR RESULTS. I LOVE SIMPLE INTERFACES WITH DEEP MEANING – AS WELL AS SIMPLE THINGS THAT BRING TRUE PLEASURE.
+              I champion clarity, elegance, and functionality in every project. Guided by thoughtful simplicity, I focus on building solutions that truly matter and deliver real impact. I craft digital experiences that are deceptively simple yet profoundly effective, blending technical precision with a user-centered mindset.
             </p>
           </div>
         </AnimatedSection>
@@ -301,12 +301,12 @@ const AboutSection = () => {
             <div className="reveal-item">
               <h3>MY LIFESTYLE ↘</h3>
               <p>
-                I LOOK FOR AESTHETICS EVERYWHERE: IN THE FORMS OF NATURE, IN THE DETAILS OF ARCHITECTURE, IN THE COLORS OF CITY STREETS, AND EVEN IN THE SIMPLE THINGS OF EVERYDAY LIFE. IT’S NOT JUST A HOBBY – IT’S A WAY OF SEEING THE WORLD.
+                I SEE ELEGANCE AND PURPOSE EVERYWHERE: IN CLEAN, STRUCTURED CODE, IN SMOOTH AND INTUITIVE USER INTERACTIONS, IN THOUGHTFUL LAYOUTS, AND IN THE SMALL DETAILS THAT MAKE DIGITAL EXPERIENCES MEMORABLE. IT’S NOT JUST A WAY OF WORKING – IT’S A WAY OF THINKING. I CONSTANTLY OBSERVE HOW USERS ENGAGE WITH WEBSITES AND APPS, DRAWING INSPIRATION FROM EVERYTHING AROUND ME, FROM THE STRUCTURE OF NATURE TO THE COLORS AND PATTERNS OF DAILY LIFE.
               </p>
             </div>
             <div className="reveal-item">
               <p>
-                EVERY PROJECT FOR ME IS MORE THAN A TASK. IT’S A STORY THAT I HELP TELL THROUGH DESIGN. I BELIEVE THAT A GOOD INTERFACE IS NOT JUST ABOUT COLORS AND FONTS, BUT ABOUT THE FEELINGS IT EVOKES.
+                EVERY PROJECT IS MORE THAN JUST BUILDING FEATURES OR FUNCTIONALITY. IT’S A STORY I HELP BRING TO LIFE THROUGH CODE, CREATING EXPERIENCES THAT ARE SEAMLESS, ENGAGING, AND INTUITIVE. I BELIEVE A GOOD DIGITAL PRODUCT IS NOT ONLY FUNCTIONAL BUT ALSO EVOKES EMOTION, DELIGHT, AND LASTING IMPACT FOR ITS USERS.
               </p>
             </div>
           </div>

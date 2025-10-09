@@ -272,10 +272,10 @@ const GlobalStyles = () => (
 );
 
 const projects = [
-  { id: 1, title: 'Generated Art', img: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=800&q=80', face: 'face-front', link: 'https://generatedart.com' },
-  { id: 2, title: 'Veggie Taipei', img: 'https://images.unsplash.com/photo-1540914124281-3425879413d5?w=800&q=80', face: 'face-right', link: 'https://veggietaipei.com' },
-  { id: 3, title: 'Ning Hunag', img: 'https://images.unsplash.com/photo-1558655146-364adaf1fcc9?w=800&q=80', face: 'face-back', link: 'https://ninghunag.com' },
-  { id: 4, title: 'Invasion', img: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=800&q=80', face: 'face-left', link: 'https://invasion.com' },
+  { id: 1, title: 'SWIPE N RISE ', img: '/assets/SNR.webp', face: 'face-front', link: 'https://www.swipenrise.com/' },
+  { id: 2, title: 'TAX BAR ASSOCIATION', img: '/assets/TXB.webp', face: 'face-right', link: 'https://taxbarassociationrishikesh.com/' },
+  { id: 3, title: 'YASH SHARMA PORTFOLIO', img: '/assets/YSP.webp', face: 'face-back', link: 'http://localhost:5173' },
+  { id: 4, title: 'SAVAYA STAY', img: '/assets/SAVY.webp', face: 'face-left', link: 'https://www.savayastay.com/' },
   { id: 5, title: '3D Renders', img: 'https://images.unsplash.com/photo-1617099224168-5474a6a5b6f3?w=800&q=80', face: 'face-top', link: 'https://3drenders.com' },
 ];
 
