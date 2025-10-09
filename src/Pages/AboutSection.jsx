@@ -233,21 +233,21 @@ const AboutSection = () => {
 
            /* -- Mobile Image & Contact Order Fix -- */
            .lifestyle-image-container { 
-                grid-row: 1; /* Images come first */
-                display: flex; /* Revert to flex for mobile */
-                flex-direction: row;
-                justify-content: center;
-                gap: 1.5rem;
-                padding-bottom: 2rem;
-            }
+               grid-row: 1; /* Images come first */
+               display: flex; /* Revert to flex for mobile */
+               flex-direction: row;
+               justify-content: center;
+               gap: 1.5rem;
+               padding-bottom: 2rem;
+           }
             .lifestyle-image-1, .lifestyle-image-2 { /* Revert image positioning */
-                margin-top: 0;
-                margin-bottom: 0;
-                width: 50%; /* Each image takes 50% */
-                max-width: 220px;
-            }
-            .lifestyle-text-col { grid-row: 2; } /* Text comes after images */
-            .lifestyle-contact { grid-row: 3; } /* Contact link comes last */
+               margin-top: 0;
+               margin-bottom: 0;
+               width: 50%; /* Each image takes 50% */
+               max-width: 220px;
+           }
+           .lifestyle-text-col { grid-row: 2; } /* Text comes after images */
+           .lifestyle-contact { grid-row: 3; } /* Contact link comes last */
         }
       `}</style>
 
@@ -275,7 +275,7 @@ const AboutSection = () => {
         <AnimatedSection className="about-section about-section-philosophy">
           <h1 className="philosophy-headline reveal-item">
             IT'S NOT JUST A CODE<br />
-             IT'S A WAY<br/>
+              IT'S A WAY<br/>
             OF THINKING.
           </h1>
           <div className="philosophy-text-block-1 reveal-item">
@@ -311,8 +311,12 @@ const AboutSection = () => {
             </div>
           </div>
           <div className="lifestyle-contact reveal-item">
-              <a href="#contact">
-                <span>LETS CONTACT</span>
+              {/* MODIFICATION: This link now points to the #connect ID.
+                Make sure your Connect.jsx component has an element with id="connect".
+                For example: <section id="connect">...</section>
+              */}
+              <a href="#connect">
+                <span>LETS CONNECT</span>
                 <span className="link-arrow">
                   <span className="arrow-default">↗</span>
                   <span className="arrow-hover">→</span>
