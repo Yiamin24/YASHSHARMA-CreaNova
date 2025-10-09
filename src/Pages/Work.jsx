@@ -33,7 +33,7 @@ const GlobalStyles = () => (
 
     .section-bottom-text-container {
       position: absolute;
-      bottom: 20px; /* buttons ke just upar */
+      bottom: 20px;
       width: 100%;
       display: flex;
       justify-content: center;
@@ -67,10 +67,11 @@ const GlobalStyles = () => (
       user-select: none;
     }
 
+    /* Cube */
     .cube-scene {
       width: 300px;
       height: 300px;
-      perspective: 1500px;
+      perspective: 2000px;
       margin-bottom: 2rem;
       margin-top: 50px;
     }
@@ -87,13 +88,12 @@ const GlobalStyles = () => (
       position: absolute;
       width: 300px;
       height: 300px;
-      background-color: #000;
-      color: white;
-      overflow: hidden;
       display: flex;
       align-items: flex-end;
+      justify-content: center;
+      background-color: #111;
       border: 1px solid #333;
-      transition: transform 0.5s ease;
+      overflow: hidden;
     }
 
     .cube-face a {
@@ -106,33 +106,30 @@ const GlobalStyles = () => (
       z-index: 2;
     }
 
-    .card-image {
-      position: absolute;
-      inset: 0;
+    .cube-face img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 1;
       transition: transform 0.3s ease;
     }
 
-    .cube-face:hover .card-image {
+    .cube-face:hover img {
       transform: scale(1.05);
     }
 
-    .card-content {
-      position: relative;
-      padding: 1rem;
-      z-index: 2;
+    .cube-face .card-content {
+      position: absolute;
+      bottom: 0;
       width: 100%;
+      padding: 1rem;
       background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
     }
 
     .card-title { 
       font-family: 'Anton', sans-serif;
-      font-size: 2rem;
-      line-height: 1;
-      text-transform: uppercase;
+      font-size: 1.5rem;
+      text-align: center;
+      color: white;
     }
 
     .face-front  { transform: rotateY(0deg) translateZ(150px); }
@@ -140,13 +137,15 @@ const GlobalStyles = () => (
     .face-right  { transform: rotateY(90deg) translateZ(150px); }
     .face-left   { transform: rotateY(-90deg) translateZ(150px); }
     .face-top    { transform: rotateX(90deg) translateZ(150px); }
+    .face-bottom { transform: rotateX(-90deg) translateZ(150px); }
 
+    /* Exploded Cards Desktop */
     .exploded-row {
       display: flex;
-      flex-direction: row;
       gap: 1rem;
       position: absolute;
-      top: 80px;
+      top: 50%;
+      transform: translateY(-50%);
       z-index: 10;
       align-items: flex-start;
       justify-content: center;
@@ -166,7 +165,6 @@ const GlobalStyles = () => (
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      transform-origin: center;
       cursor: pointer;
     }
 
@@ -188,7 +186,66 @@ const GlobalStyles = () => (
       border-radius: 0 0 15px 15px;
     }
 
-    /* Joystick & Explode Button Container inside Work section */
+    /* Mobile Carousel */
+    .mobile-carousel {
+      display: none;
+      width: 90%;
+      overflow: hidden;
+      position: relative;
+      margin-top: 50px;
+    }
+
+    .carousel-inner {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .carousel-card {
+      min-width: 100%;
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .carousel-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .carousel-card .card-content {
+      padding: 0.5rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 100%);
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      color: white;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.4);
+      border: none;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+    }
+
+    .carousel-btn:hover { background: rgba(0,0,0,0.6); }
+    .carousel-btn-left { left: 10px; }
+    .carousel-btn-right { right: 10px; }
+
+    /* Controls */
     .controls-container {
       position: absolute;
       bottom: 20px;
@@ -200,59 +257,26 @@ const GlobalStyles = () => (
       align-items: center;
     }
 
-    .joystick-container {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      touch-action: none;
-      background: rgba(0,0,0,0.1);
-      box-shadow: inset 0 4px 8px rgba(0,0,0,0.2);
-    }
+    .joystick-container { width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; touch-action: none; background: rgba(0,0,0,0.1); box-shadow: inset 0 4px 8px rgba(0,0,0,0.2);}
+    .joystick-thumb { width: 40px; height: 40px; background: linear-gradient(145deg,#666,#222); border-radius: 50%; pointer-events: none; transition: transform 0.05s ease;}
 
-    .joystick-thumb {
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(145deg,#666,#222);
-      border-radius: 50%;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-      pointer-events: none;
-      transition: transform 0.05s ease;
-    }
+    .explode-btn { width: 100px; height: 100px; border-radius: 50%; border: none; background-color: #c0392b; color: white; font-family: 'Roboto Mono', monospace; font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 4px 8px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.3); transition: all 0.3s ease; }
+    .explode-btn:hover { background-color: #e74c3c; transform: scale(1.05); }
 
-    .explode-btn {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      border: none;
-      background-color: #c0392b;
-      color: white;
-      font-family: 'Roboto Mono', monospace;
-      font-size: 0.9rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: inset 0 4px 8px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.3);
-      transition: all 0.3s ease;
-    }
-
-    .explode-btn:hover {
-      background-color: #e74c3c;
-      transform: scale(1.05);
+    @media (max-width: 768px) {
+      .joystick-container { display: none; }
+      .mobile-carousel { display: block; }
+      .section-bottom-text { font-size: 0.85rem; }
     }
   `}</style>
 );
 
 const projects = [
-  { id: 1, title: 'Generated Art', img: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=800&q=80', face: 'face-front' },
-  { id: 2, title: 'Veggie Taipei', img: 'https://images.unsplash.com/photo-1540914124281-3425879413d5?w=800&q=80', face: 'face-right' },
-  { id: 3, title: 'Ning Hunag', img: 'https://images.unsplash.com/photo-1558655146-364adaf1fcc9?w=800&q=80', face: 'face-back' },
-  { id: 4, title: 'Invasion', img: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=800&q=80', face: 'face-left' },
-  { id: 5, title: '3D Renders', img: 'https://images.unsplash.com/photo-1617099224168-5474a6a5b6f3?w=800&q=80', face: 'face-top' },
+  { id: 1, title: 'Generated Art', img: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=800&q=80', face: 'face-front', link: 'https://generatedart.com' },
+  { id: 2, title: 'Veggie Taipei', img: 'https://images.unsplash.com/photo-1540914124281-3425879413d5?w=800&q=80', face: 'face-right', link: 'https://veggietaipei.com' },
+  { id: 3, title: 'Ning Hunag', img: 'https://images.unsplash.com/photo-1558655146-364adaf1fcc9?w=800&q=80', face: 'face-back', link: 'https://ninghunag.com' },
+  { id: 4, title: 'Invasion', img: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=800&q=80', face: 'face-left', link: 'https://invasion.com' },
+  { id: 5, title: '3D Renders', img: 'https://images.unsplash.com/photo-1617099224168-5474a6a5b6f3?w=800&q=80', face: 'face-top', link: 'https://3drenders.com' },
 ];
 
 const Work = () => {
@@ -263,6 +287,9 @@ const Work = () => {
   const joystickRef = useRef(null);
   const thumbRef = useRef(null);
   const velocity = useRef({ x: 0, y: 0 });
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState(null);
 
   useEffect(() => {
     if (exploded) return;
@@ -301,6 +328,20 @@ const Work = () => {
     glide();
   };
 
+  const handleNext = () => setCurrentIndex((prev) => (prev + 1) % projects.length);
+  const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length);
+
+  const handleTouchStart = (e) => setTouchStartX(e.touches[0].clientX);
+  const handleTouchEnd = (e) => {
+    if (touchStartX === null) return;
+    const delta = e.changedTouches[0].clientX - touchStartX;
+    if (delta > 50) handlePrev();
+    else if (delta < -50) handleNext();
+    setTouchStartX(null);
+  };
+
+  const isMobile = window.innerWidth <= 768;
+
   return (
     <>
       <GlobalStyles />
@@ -318,14 +359,11 @@ const Work = () => {
 
         {!exploded && (
           <div className="cube-scene">
-            <motion.div
-              className="cube"
-              style={{ rotateY, rotateX: rotateXClamped }}
-            >
+            <motion.div className="cube" style={{ rotateY, rotateX: rotateXClamped }}>
               {projects.map(project => (
                 <div key={project.id} className={`cube-face ${project.face}`}>
-                  <a href={`/projects/${project.id}`} target="_blank" rel="noopener noreferrer">
-                    <img src={project.img} alt={project.title} className="card-image" />
+                  <a href={project.link} target="_blank" rel="noopener noreferrer">
+                    <img src={project.img} alt={project.title} />
                     <div className="card-content">
                       <h3 className="card-title">{project.title}</h3>
                     </div>
@@ -336,7 +374,26 @@ const Work = () => {
           </div>
         )}
 
-        {exploded && (
+        {exploded && isMobile && (
+          <div className="mobile-carousel" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+            <div className="carousel-inner" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+              {projects.concat(projects).map((project, idx) => (
+                <div className="carousel-card" key={idx}>
+                  <a href={project.link} target="_blank" rel="noopener noreferrer">
+                    <img src={project.img} alt={project.title} />
+                    <div className="card-content">
+                      <h3>{project.title}</h3>
+                    </div>
+                  </a>
+                </div>
+              ))}
+            </div>
+            <button className="carousel-btn carousel-btn-left" onClick={handlePrev}>‹</button>
+            <button className="carousel-btn carousel-btn-right" onClick={handleNext}>›</button>
+          </div>
+        )}
+
+        {exploded && !isMobile && (
           <div className="exploded-row">
             {projects.map((project, i) => (
               <motion.div key={project.id} className="exploded-card"
@@ -345,22 +402,26 @@ const Work = () => {
                 transition={{ duration: 0.7, delay: i * 0.1, type: "spring", stiffness: 120 }}
                 whileHover={{ y: -10, scale: 1.05, rotate: 2 }}
               >
-                <img src={project.img} alt={project.title} />
-                <div className="card-content">
-                  <h3 className="card-title">{project.title}</h3>
-                </div>
+                <a href={project.link} target="_blank" rel="noopener noreferrer">
+                  <img src={project.img} alt={project.title} />
+                  <div className="card-content">
+                    <h3 className="card-title">{project.title}</h3>
+                  </div>
+                </a>
               </motion.div>
             ))}
           </div>
         )}
 
-        {/* Controls and aligned bottom text */}
         <div className="section-bottom-text-container">
-          <div className="section-bottom-text">I AM A DIGITAL DESIGNER BASED IN UTTARAKHAND, INDIA <br/>FOCUSED ON WEB EXPERIENCE & MOTION DESIGN</div>
+          <div className="section-bottom-text">
+            I AM A DIGITAL DESIGNER BASED IN UTTARAKHAND, INDIA <br/>
+            FOCUSED ON WEB EXPERIENCE & MOTION DESIGN
+          </div>
         </div>
 
         <div className="controls-container">
-          {!exploded && (
+          {!exploded && !isMobile && (
             <div
               ref={joystickRef}
               className="joystick-container"
