@@ -203,11 +203,11 @@ const HeroSection = ({ servicesPosition = {} }) => {
             </div>
           
             <div className="hero-section-mobile-description">
-                I'M EXPERIENCED WEB AND UX/UI DESIGNER,
+                I CRAFT POWERFUL WEB-EXPERIENCES,
                 <br />
-                WHO DESIGN MEMORABLE WEB EXPERIENCES FOR
+                THAT BLENDS PERFORMANCE, DESIGN & MAGIC
                 <br />
-                BRANDS OF ALL SIZES
+                  FOR BRANDS OF ALL SIZES
             </div>
           </div>
         </div>
