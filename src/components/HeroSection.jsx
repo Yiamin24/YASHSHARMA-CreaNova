@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 // Local image path
-const designerImageUrl = "/assets/Hero.webp";
+const designerImageUrl = "/assets/A.webp";
 
 const HeroSection = ({ servicesPosition = {} }) => {
   const [visitorCount, setVisitorCount] = useState(0);

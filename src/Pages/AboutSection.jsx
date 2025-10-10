@@ -257,7 +257,7 @@ const AboutSection = () => {
             <header className="about-header reveal-item">ABOUT ME</header>
             <div className="intro-content-wrapper">
                 <div className="intro-image reveal-item">
-                    <img src="/assets/Hero.webp" alt="Portrait of Yash Sharma" />
+                    <img src="/assets/A.webp" alt="Portrait of Yash Sharma" />
                 </div>
                 <div className="intro-greeting reveal-item">
                     <h2>HELLO!</h2>
@@ -294,8 +294,8 @@ const AboutSection = () => {
         <AnimatedSection className="about-section about-section-lifestyle">
           <div className="lifestyle-image-container reveal-item">
             {/* Images are now separate for individual grid control */}
-            <img src="/assets/Hero.webp" alt="Lifestyle portrait" className="lifestyle-image-1" />
-            <img src="/assets/Hero.webp" alt="Lifestyle architecture" className="lifestyle-image-2" />
+            <img src="/assets/y.webp" alt="Lifestyle portrait" className="lifestyle-image-1" />
+            <img src="/assets/H.webp" alt="Lifestyle architecture" className="lifestyle-image-2" />
           </div>
           <div className="lifestyle-text-col">
             <div className="reveal-item">
