@@ -36,7 +36,6 @@ const HeroSection = ({ servicesPosition = {} }) => {
   const mobileTitleLine1 = "CREATIVE".split("");
   const mobileTitleLine2 = "DESIGNER".split("");
 
-
   // --- MOBILE LAYOUT ---
   if (isMobile) {
     return (
