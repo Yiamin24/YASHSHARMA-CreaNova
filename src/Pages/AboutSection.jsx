@@ -266,7 +266,7 @@ const AboutSection = () => {
                 <div className="intro-experience">
                     <h3 className="reveal-item">MY EXPERIENCE ↘</h3>
                     <p className="reveal-item">
-                        A web developer with 1 year of experience crafting exquisite, high-fidelity, and immersive digital experiences that transform visionary concepts into reality.
+                        A web developer creating high-fidelity, immersive digital experiences that bring visionary concepts to life
                     </p>
                 </div>
             </div>
@@ -280,7 +280,7 @@ const AboutSection = () => {
           </h1>
           <div className="philosophy-text-block-1 reveal-item">
             <p>
-              My work reflects how I approach challenges. As a web developer with 1 year of experience, I constantly explore how users interact with digital products, striving to create seamless, intuitive, and meaningful experiences..
+              My work reflects how I approach challenges. As a web developer,I constantly explore how users interact with digital products, striving to create seamless, intuitive, and meaningful experiences..
             </p>
           </div>
           <div className="philosophy-text-block-2 reveal-item">

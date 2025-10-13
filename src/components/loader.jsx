@@ -1,21 +1,9 @@
 // src/loader.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // Inject responsive & animation styles
 const styleSheet = document.createElement("style");
 styleSheet.innerText = `
-  @media (max-width: 600px) {
-    .loader-content-dynamic {
-      flex-direction: column;
-      gap: 0.5rem;
-      font-size: 0.7rem;
-      justify-content: flex-start;
-      align-items: center;
-      height: 70vh;
-      max-width: 90%;
-    }
-  }
-
   /* Letter shatter keyframes */
   @keyframes letterShatter {
     0% { transform: translate(0,0) rotate(0deg); opacity: 1; }
@@ -62,6 +50,13 @@ styleSheet.innerText = `
     animation: particleFly 1s forwards;
     pointer-events: none;
   }
+
+  /* Mobile scaling without layout change */
+  @media (max-width: 600px) {
+    .loader-content-dynamic {
+      transform: scale(0.6);
+    }
+  }
 `;
 document.head.appendChild(styleSheet);
 
@@ -80,6 +75,7 @@ const generateParticles = (count = 6, scale = 1) => {
 };
 
 const Loader = ({ onFinish, landingBgColor = '#0a0a0a' }) => {
+  const containerRef = useRef(null);
   const [progress, setProgress] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isBreaking, setIsBreaking] = useState(false);
@@ -87,9 +83,18 @@ const Loader = ({ onFinish, landingBgColor = '#0a0a0a' }) => {
   const [particles, setParticles] = useState([]);
   const [landingActive, setLandingActive] = useState(false);
   const [bgColor, setBgColor] = useState('#000');
+  const [scale, setScale] = useState(1);
 
-  // Detect screen size for scaling
-  const scale = window.innerWidth < 600 ? 0.5 : 1;
+  // Detect container size for scaling (responsive)
+  useEffect(() => {
+    const updateScale = () => {
+      if (window.innerWidth < 600) setScale(0.6);
+      else setScale(1);
+    };
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, []);
 
   // Loader counter 2.5s
   useEffect(() => {
@@ -164,15 +169,15 @@ const Loader = ({ onFinish, landingBgColor = '#0a0a0a' }) => {
     zIndex: 9999,
     overflow: 'hidden',
     flexDirection: 'column',
-    transition: 'background-color 1s ease-in-out', // smooth bg transition
-    padding: scale === 0.5 ? '0 10px' : '0', // small padding for small screens
+    transition: 'background-color 1s ease-in-out',
+    padding: '0',
   };
 
   const loaderContentStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    fontSize: scale === 0.5 ? '0.9rem' : '1rem',
+    fontSize: `${scale === 1 ? 1 : 0.9}rem`,
     fontWeight: 700,
     letterSpacing: '0.05em',
     textTransform: 'uppercase',
@@ -190,7 +195,7 @@ const Loader = ({ onFinish, landingBgColor = '#0a0a0a' }) => {
 
   return (
     <>
-      <div style={loaderContainerStyle}>
+      <div style={loaderContainerStyle} ref={containerRef}>
         <div
           style={loaderContentStyle}
           className={`loader-content-dynamic ${isBreaking ? 'shatter' : ''}`}
@@ -223,7 +228,14 @@ const Loader = ({ onFinish, landingBgColor = '#0a0a0a' }) => {
 
       {/* Landing page placeholder */}
       <div className={`landing-fade-in ${landingActive ? 'active' : ''}`}>
-        <h1 style={{ color: '#fff', textAlign: 'center', marginTop: '40vh', fontSize: scale === 0.5 ? '1.2rem' : '2rem' }}>
+        <h1
+          style={{
+            color: '#fff',
+            textAlign: 'center',
+            marginTop: '40vh',
+            fontSize: scale === 1 ? '2rem' : '1.2rem',
+          }}
+        >
           Welcome to the Portfolio
         </h1>
       </div>

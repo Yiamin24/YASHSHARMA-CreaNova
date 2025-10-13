@@ -189,7 +189,7 @@ const Services = () => {
           </div>
         </div>
 
-        <img src="/YS.png" alt="Icon" className="static-icon" />
+        <img src="/assets/YSPS.webp" alt="Icon" className="static-icon" />
 
         <div className="bottom-text-container">
           <p>WHAT I'VE BEEN CRAFTING ALONG THE WAY</p>

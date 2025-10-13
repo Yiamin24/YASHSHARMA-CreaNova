@@ -188,7 +188,7 @@ const Connect = () => {
           </div>
 
           <div className="budget-section">
-            <label className="budget-label">PROJECT BUDGET (USD)</label>
+            <label className="budget-label">PROJECT BUDGET (Rs)</label>
             <div className="budget-options">
               {["1K-5K", "5K-10K", "MORE"].map((option) => (
                 <button

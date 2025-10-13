@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react';
 
-// === Updated Scramble Component (like navbar animation) ===
+// === Updated Scramble Component (links fixed) ===
 const ScrambledLink = ({ children, href }) => {
   const [text, setText] = useState(children);
   const intervalRef = useRef(null);
   const originalText = children;
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // same as header
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   const handleMouseOver = () => {
     let iteration = 0;
@@ -33,11 +33,13 @@ const ScrambledLink = ({ children, href }) => {
     setText(originalText);
   };
 
-  // Smooth scroll function
   const handleClick = (e) => {
-    e.preventDefault();
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+    // External links open normally in a new tab
   };
 
   return (
@@ -47,6 +49,8 @@ const ScrambledLink = ({ children, href }) => {
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
+      target={href.startsWith("http") ? "_blank" : "_self"}
+      rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
     >
       {text}
     </a>
@@ -203,7 +207,7 @@ const FooterX = () => {
 
             <ul className="social-links-top">
               <li>
-                <a href="#instagram" className="arrow-animated-link underline-anim origin-left">
+                <a href="https://www.instagram.com/" className="arrow-animated-link underline-anim origin-left">
                   Instagram
                   <span className="arrow-container">
                     <span className="arrow-default">↗</span>
@@ -212,7 +216,7 @@ const FooterX = () => {
                 </a>
               </li>
               <li>
-                <a href="#telegram" className="arrow-animated-link underline-anim origin-left">
+                <a href="https://telegram.org/" className="arrow-animated-link underline-anim origin-left">
                   Telegram
                   <span className="arrow-container">
                     <span className="arrow-default">↗</span>
@@ -221,7 +225,7 @@ const FooterX = () => {
                 </a>
               </li>
               <li>
-                <a href="#facebook" className="arrow-animated-link underline-anim origin-left">
+                <a href="https://www.facebook.com/" className="arrow-animated-link underline-anim origin-left">
                   Facebook
                   <span className="arrow-container">
                     <span className="arrow-default">↗</span>
@@ -234,14 +238,14 @@ const FooterX = () => {
 
           <div className="footer-address">
             <p>Address:</p>
-            <p>63/A Dangwal Marg</p>
+            <p>Dangwal Marg</p>
             <p>Dehradun, India</p>
           </div>
 
           <div className="footer-social-bottom">
-            <ScrambledLink href="#dribbble">[ DRIBBBLE ]</ScrambledLink>
-            <ScrambledLink href="#behance">[ BEHANCE ]</ScrambledLink>
-            <ScrambledLink href="#linkedin">[ LINKEDIN ]</ScrambledLink>
+            <ScrambledLink href="https://dribbble.com/">[ DRIBBBLE ]</ScrambledLink>
+            <ScrambledLink href="https://www.behance.net/">[ BEHANCE ]</ScrambledLink>
+            <ScrambledLink href="https://www.linkedin.com/in/yash-sharma-8ba7092b7/">[ LINKEDIN ]</ScrambledLink>
           </div>
         </footer>
       </div>
