@@ -310,6 +310,10 @@ const GlobalStyles = () => (
       .section-bottom-text { font-size: 0.85rem; }
       .joystick-container { width: 60px; height: 60px; }
       .joystick-thumb { width: 30px; height: 30px; }
+
+      /* Explode button same size as joystick on mobile */
+      .explode-btn { width: 60px; height: 60px; font-size: 0.7rem; }
+
       .mobile-carousel { display: block; }
     }
   `}</style>
@@ -488,16 +492,16 @@ const Work = () => {
               onMouseLeave={handleJoystickEnd}
               onTouchMove={handleJoystickMove}
               onTouchEnd={handleJoystickEnd}
+              onTouchStart={(e) => e.preventDefault()} // fix drag on mobile
             >
               <div ref={thumbRef} className="joystick-thumb" />
             </div>
           )}
 
           <button className="explode-btn" onClick={() => setExploded(!exploded)}>
-            {exploded ? "Reset" : "Explode"}
+            {exploded ? "RESET" : "EXPLODE"}
           </button>
         </div>
-
       </section>
     </>
   );
