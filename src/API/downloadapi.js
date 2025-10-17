@@ -5,12 +5,13 @@ const BACKEND_URL = "https://yashsharma-designfolio-backend.onrender.com";
 
 export const downloadResume = async () => {
   try {
-    const response = await fetch(`${BACKEND_URL}/download-resume/`, {
+    // ✅ Removed trailing slash to match backend route
+    const response = await fetch(`${BACKEND_URL}/download-resume`, {
       method: "GET",
     });
 
     if (!response.ok) {
-      throw new Error("Failed to fetch resume");
+      throw new Error(`Failed to fetch resume. Status: ${response.status}`);
     }
 
     const file = await response.blob();
