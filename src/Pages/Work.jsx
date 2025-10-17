@@ -279,7 +279,7 @@ const GlobalStyles = () => (
 );
 
 const projects = [
-  { id: 1, title: 'TAX BAR ASSOCIATION ', img: '/public/assets/TXBSS.webp', face: 'face-front', link: 'https://taxbarassociationrishikesh.com/' },
+  { id: 1, title: 'TAX BAR ASSOCIATION ', img: '/assets/TXBSS.webp', face: 'face-front', link: 'https://taxbarassociationrishikesh.com/' },
   { id: 2, title: 'SWIPE N RISE', img: '/assets/SNR.webp', face: 'face-right', link: 'https://www.swipenrise.com/' },
   { id: 3, title: 'YASH SHARMA PORTFOLIO', img: '/assets/YSSS.webp', face: 'face-back', link: 'http://localhost:5173' },
   { id: 4, title: 'SAVAYA STAY', img: '/assets/SAVY.webp', face: 'face-left', link: 'https://www.savayastay.com/' },
