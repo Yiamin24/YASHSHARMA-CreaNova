@@ -1,21 +1,9 @@
 // src/loader.jsx
-import React, { useState, useEffect } from 'react';
-import LandingPage from './LandingPage'; // your actual landing page component
+import React, { useState, useEffect, useRef } from 'react';
 
 // Inject responsive & animation styles
 const styleSheet = document.createElement("style");
 styleSheet.innerText = `
-  @media (max-width: 600px) {
-    .loader-content-dynamic {
-      flex-direction: column;
-      gap: 1rem;
-      font-size: 0.8rem;
-      justify-content: flex-start;
-      align-items: center;
-      height: 80vh;
-    }
-  }
-
   /* Letter shatter keyframes */
   @keyframes letterShatter {
     0% { transform: translate(0,0) rotate(0deg); opacity: 1; }
@@ -25,7 +13,7 @@ styleSheet.innerText = `
   /* Particle spark keyframes */
   @keyframes particleFly {
     0% { transform: translate(0,0) scale(1); opacity: 1; }
-    100% { transform: translate(var(--px), var(--py)) scale(0.5); opacity: 0; }
+    100% { transform: translate(var(--px), var(--py)) scale(0.4); opacity: 0; }
   }
 
   /* Camera shake + zoom-out keyframes */
@@ -38,6 +26,15 @@ styleSheet.innerText = `
     100% { transform: scale(0.8) translate(0,0); }
   }
 
+  /* Landing page fade-in */
+  .landing-fade-in {
+    opacity: 0;
+    transition: opacity 1s ease-in;
+  }
+  .landing-fade-in.active {
+    opacity: 1;
+  }
+
   .shatter span {
     display: inline-block;
     animation: letterShatter 1s forwards;
@@ -46,12 +43,19 @@ styleSheet.innerText = `
 
   .particle {
     position: absolute;
-    width: 4px;
-    height: 4px;
+    width: 3px;
+    height: 3px;
     background: #fff;
     border-radius: 50%;
     animation: particleFly 1s forwards;
     pointer-events: none;
+  }
+
+  /* Mobile scaling without layout change */
+  @media (max-width: 600px) {
+    .loader-content-dynamic {
+      transform: scale(0.6);
+    }
   }
 `;
 document.head.appendChild(styleSheet);
@@ -59,25 +63,38 @@ document.head.appendChild(styleSheet);
 // Helpers
 const randomValue = (min, max, unit = 'px') => `${Math.floor(Math.random() * (max - min) + min)}${unit}`;
 const randomRotation = () => `${Math.floor(Math.random() * 360 - 180)}deg`;
-const generateParticles = (count = 6) => {
+const generateParticles = (count = 6, scale = 1) => {
   const particles = [];
   for (let i = 0; i < count; i++) {
     particles.push({
-      '--px': randomValue(-150, 150),
-      '--py': randomValue(-150, 150),
+      '--px': randomValue(-150 * scale, 150 * scale),
+      '--py': randomValue(-150 * scale, 150 * scale),
     });
   }
   return particles;
 };
 
-const Loader = ({ landingBgColor = '#0a0a0a' }) => {
+const Loader = ({ onFinish, landingBgColor = '#0a0a0a' }) => {
+  const containerRef = useRef(null);
   const [progress, setProgress] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isBreaking, setIsBreaking] = useState(false);
   const [shatterStyles, setShatterStyles] = useState([]);
   const [particles, setParticles] = useState([]);
-  const [showLanding, setShowLanding] = useState(false);
+  const [landingActive, setLandingActive] = useState(false);
   const [bgColor, setBgColor] = useState('#000');
+  const [scale, setScale] = useState(1);
+
+  // Detect container size for scaling (responsive)
+  useEffect(() => {
+    const updateScale = () => {
+      if (window.innerWidth < 600) setScale(0.6);
+      else setScale(1);
+    };
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, []);
 
   // Loader counter 2.5s
   useEffect(() => {
@@ -98,8 +115,8 @@ const Loader = ({ landingBgColor = '#0a0a0a' }) => {
         const letterStyles = [];
         allText.forEach(line => {
           const lineStyles = line.split('').map(() => ({
-            '--x': randomValue(-200, 200),
-            '--y': randomValue(-200, 200),
+            '--x': randomValue(-200 * scale, 200 * scale),
+            '--y': randomValue(-200 * scale, 200 * scale),
             '--r': randomRotation(),
           }));
           letterStyles.push(lineStyles);
@@ -110,23 +127,24 @@ const Loader = ({ landingBgColor = '#0a0a0a' }) => {
         const allParticles = [];
         allText.forEach(line => {
           line.split('').forEach(() => {
-            allParticles.push(generateParticles(4));
+            allParticles.push(generateParticles(4, scale));
           });
         });
         setParticles(allParticles.flat());
 
         setIsBreaking(true);
 
-        // Show landing page after shatter + particle animation
+        // Background color transition & landing fade-in
         setTimeout(() => {
-          setBgColor(landingBgColor); // transition background
-          setShowLanding(true);
-        }, 1000); // 1s matches shatter+particle animation
+          setBgColor(landingBgColor);
+          setLandingActive(true);
+          if (onFinish) onFinish();
+        }, 1000); // Wait for shatter+particles
       }
     }, intervalTime);
 
     return () => clearInterval(interval);
-  }, [landingBgColor]);
+  }, [onFinish, landingBgColor, scale]);
 
   // Expand animation
   useEffect(() => {
@@ -142,7 +160,7 @@ const Loader = ({ landingBgColor = '#0a0a0a' }) => {
     left: 0,
     width: '100vw',
     height: '100vh',
-    display: showLanding ? 'none' : 'flex', // hide loader when landing shows
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: bgColor,
@@ -152,19 +170,20 @@ const Loader = ({ landingBgColor = '#0a0a0a' }) => {
     overflow: 'hidden',
     flexDirection: 'column',
     transition: 'background-color 1s ease-in-out',
+    padding: '0',
   };
 
   const loaderContentStyle = {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
-    fontSize: '1rem',
+    fontSize: `${scale === 1 ? 1 : 0.9}rem`,
     fontWeight: 700,
-    letterSpacing: '0.1em',
+    letterSpacing: '0.05em',
     textTransform: 'uppercase',
-    maxWidth: '900px',
+    maxWidth: '90%',
     width: isAnimating ? '80%' : '300px',
-    gap: isAnimating ? '1rem' : '1.5rem',
+    gap: isAnimating ? '0.5rem' : '1rem',
     transition: 'width 2s ease-out, gap 2s ease-out',
     flexWrap: 'wrap',
     position: 'relative',
@@ -176,7 +195,7 @@ const Loader = ({ landingBgColor = '#0a0a0a' }) => {
 
   return (
     <>
-      <div style={loaderContainerStyle}>
+      <div style={loaderContainerStyle} ref={containerRef}>
         <div
           style={loaderContentStyle}
           className={`loader-content-dynamic ${isBreaking ? 'shatter' : ''}`}
@@ -207,8 +226,19 @@ const Loader = ({ landingBgColor = '#0a0a0a' }) => {
         </div>
       </div>
 
-      {/* Actual landing page */}
-      {showLanding && <LandingPage />}
+      {/* Landing page placeholder */}
+      <div className={`landing-fade-in ${landingActive ? 'active' : ''}`}>
+        <h1
+          style={{
+            color: '#fff',
+            textAlign: 'center',
+            marginTop: '40vh',
+            fontSize: scale === 1 ? '2rem' : '1.2rem',
+          }}
+        >
+          Welcome to the Portfolio
+        </h1>
+      </div>
     </>
   );
 };

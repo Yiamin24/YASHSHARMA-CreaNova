@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom"; // ✅ no Router here
+import { Routes, Route, useLocation } from "react-router-dom";
 import Loader from "./components/Loader";
 import LandingPage from "./components/LandingPage";
 import Home from "./Pages/Home";
+import Header from "./components/Header"; // Import Header
+
+
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const location = useLocation(); // Get current route
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 4500);
@@ -15,10 +19,15 @@ function App() {
   if (loading) return <Loader isFinished={!loading} />;
 
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/home" element={<Home />} />
-    </Routes>
+    <>
+      {/* Show Header only if not on landing page */}
+      {location.pathname !== "/" && <Header />}
+      
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </>
   );
 }
 

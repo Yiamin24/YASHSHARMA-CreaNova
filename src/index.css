@@ -1,17 +1,16 @@
-/* Import the Google Fonts */
+/* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,700;1,6..96,400&family=Roboto+Mono:wght@400&display=swap');
 
-/* These are the required Tailwind directives */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Import Tailwind CSS v4 */
+@import "tailwindcss";
 
-/* Add your custom base styles here */
+/* Custom global styles */
 body {
-  /* This prevents the horizontal scrollbar */
-  overflow-x: hidden;
+  overflow-x: hidden; /* Prevent horizontal scrollbar */
+  font-family: 'Roboto Mono', monospace; /* Default body font */
 }
 
+/* Custom font classes */
 .font-display {
   font-family: 'Bodoni Moda', serif;
 }
