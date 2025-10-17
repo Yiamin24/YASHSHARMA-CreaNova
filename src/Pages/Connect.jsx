@@ -272,9 +272,32 @@ const App = () => (
       .header-subtitle { letter-spacing:0.2em; font-size:0.875rem; margin-bottom:1.5rem; }
       .header-interlude { letter-spacing:0.4em; margin:1rem 0; font-size:0.875rem; }
 
-      .animated-title { font-size:6rem; line-height:1; letter-spacing:0.1em; font-weight:700; text-align:center; white-space: nowrap; overflow: hidden; }
+      .animated-title { 
+        font-size:6rem; 
+        line-height:1; 
+        letter-spacing:0.1em; 
+        font-weight:700; 
+        text-align:center; 
+        white-space: nowrap; 
+        overflow: hidden; 
+      }
+
+      /* Tablet */
       @media (max-width:768px) { 
-        .animated-title { font-size:3rem; letter-spacing:0.02em; overflow: hidden; } /* MOBILE FIX */
+        .animated-title { 
+          font-size:3rem; 
+          letter-spacing:0.02em; 
+        }
+      }
+
+      /* ✅ Mobile fix */
+      @media (max-width:480px) { 
+        .animated-title { 
+          font-size:2.2rem;      /* smaller font */
+          letter-spacing:0.01em; /* less spacing */
+          white-space:normal;    /* allow wrap */
+          line-height:1.1;
+        }
       }
 
       .connect-form { width:100%; max-width:56rem; }

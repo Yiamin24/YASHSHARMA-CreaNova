@@ -89,7 +89,7 @@ const HeroSectionMobile = () => {
           width: 100%;
           height: auto;
           filter: grayscale(100%);
-          object-fit: cover;
+          object-fit: contain;
           aspect-ratio: 4 / 5;
           display: block;
         }

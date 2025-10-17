@@ -125,7 +125,7 @@ const GlobalStyles = () => (
       background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
     }
 
-    .card-title { 
+    .card-title {
       font-family: 'Anton', sans-serif;
       font-size: 1.5rem;
       text-align: center;
@@ -163,8 +163,8 @@ const GlobalStyles = () => (
       border-radius: 15px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.5);
       display: flex;
-      justify-content: center; /* center image vertically */
-      align-items: center;     /* center image horizontally */
+      justify-content: center;
+      align-items: center;
       cursor: pointer;
     }
 
@@ -172,7 +172,7 @@ const GlobalStyles = () => (
       width: 100%;
       height: auto;
       max-height: 100%;
-      object-fit: contain; /* keep logos centered and visible */
+      object-fit: contain;
       border-radius: 15px;
       transition: transform 0.3s ease;
       display: block;
@@ -264,26 +264,62 @@ const GlobalStyles = () => (
       align-items: center;
     }
 
-    .joystick-container { width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; touch-action: none; background: rgba(0,0,0,0.1); box-shadow: inset 0 4px 8px rgba(0,0,0,0.2);}
-    .joystick-thumb { width: 40px; height: 40px; background: linear-gradient(145deg,#666,#222); border-radius: 50%; pointer-events: none; transition: transform 0.05s ease;}
+    .joystick-container {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: none;
+      background: rgba(0,0,0,0.1);
+      box-shadow: inset 0 4px 8px rgba(0,0,0,0.2);
+    }
 
-    .explode-btn { width: 100px; height: 100px; border-radius: 50%; border: none; background-color: #c0392b; color: white; font-family: 'Roboto Mono', monospace; font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 4px 8px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.3); transition: all 0.3s ease; }
+    .joystick-thumb {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(145deg,#666,#222);
+      border-radius: 50%;
+      pointer-events: none;
+      transition: transform 0.05s ease;
+    }
+
+    .explode-btn {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: none;
+      background-color: #c0392b;
+      color: white;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: inset 0 4px 8px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+
     .explode-btn:hover { background-color: #e74c3c; transform: scale(1.05); }
 
     @media (max-width: 768px) {
-      .joystick-container { display: none; }
-      .mobile-carousel { display: block; }
+      .cube-scene { width: 80vw; height: 80vw; }
       .section-bottom-text { font-size: 0.85rem; }
+      .joystick-container { width: 60px; height: 60px; }
+      .joystick-thumb { width: 30px; height: 30px; }
+      .mobile-carousel { display: block; }
     }
   `}</style>
 );
 
 const projects = [
-  { id: 1, title: 'TAX BAR ASSOCIATION ', img: '/assets/TXBSS.webp', face: 'face-front', link: 'https://taxbarassociationrishikesh.com/' },
+  { id: 1, title: 'TAX BAR ASSOCIATION', img: '/assets/TXBSS.webp', face: 'face-front', link: 'https://taxbarassociationrishikesh.com/' },
   { id: 2, title: 'SWIPE N RISE', img: '/assets/SNR.webp', face: 'face-right', link: 'https://www.swipenrise.com/' },
   { id: 3, title: 'YASH SHARMA PORTFOLIO', img: '/assets/YSSS.webp', face: 'face-back', link: 'http://localhost:5173' },
   { id: 4, title: 'SAVAYA STAY', img: '/assets/SAVY.webp', face: 'face-left', link: 'https://www.savayastay.com/' },
-  // { id: 5, title: '3D Renders', img: 'https://images.unsplash.com/photo-1617099224168-5474a6a5b6f3?w=800&q=80', face: 'face-top', link: 'https://3drenders.com' },
 ];
 
 const Work = () => {
@@ -297,6 +333,13 @@ const Work = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStartX, setTouchStartX] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     if (exploded) return;
@@ -311,9 +354,19 @@ const Work = () => {
   const handleJoystickMove = (e) => {
     e.preventDefault();
     if (exploded) return;
+
+    let clientX = e.clientX;
+    let clientY = e.clientY;
+
+    if (e.touches && e.touches[0]) {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    }
+
     const rect = joystickRef.current.getBoundingClientRect();
-    const x = Math.max(Math.min(e.clientX - rect.left - rect.width / 2, 50), -50);
-    const y = Math.max(Math.min(e.clientY - rect.top - rect.height / 2, 50), -50);
+    const x = Math.max(Math.min(clientX - rect.left - rect.width / 2, 50), -50);
+    const y = Math.max(Math.min(clientY - rect.top - rect.height / 2, 50), -50);
+
     rotateY.set(rotateY.get() + x * 0.25);
     rotateX.set(rotateXClamped.get() - y * 0.25);
     velocity.current = { x: x * 0.25, y: -y * 0.25 };
@@ -347,8 +400,6 @@ const Work = () => {
     setTouchStartX(null);
   };
 
-  const isMobile = window.innerWidth <= 768;
-
   return (
     <>
       <GlobalStyles />
@@ -381,25 +432,6 @@ const Work = () => {
           </div>
         )}
 
-        {exploded && isMobile && (
-          <div className="mobile-carousel" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-            <div className="carousel-inner" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-              {projects.concat(projects).map((project, idx) => (
-                <div className="carousel-card" key={idx}>
-                  <a href={project.link} target="_blank" rel="noopener noreferrer">
-                    <img src={project.img} alt={project.title} />
-                    <div className="card-content">
-                      <h3>{project.title}</h3>
-                    </div>
-                  </a>
-                </div>
-              ))}
-            </div>
-            <button className="carousel-btn carousel-btn-left" onClick={handlePrev}>‹</button>
-            <button className="carousel-btn carousel-btn-right" onClick={handleNext}>›</button>
-          </div>
-        )}
-
         {exploded && !isMobile && (
           <div className="exploded-row">
             {projects.map((project, i) => (
@@ -420,6 +452,25 @@ const Work = () => {
           </div>
         )}
 
+        {exploded && isMobile && (
+          <div className="mobile-carousel" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+            <div className="carousel-inner" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+              {projects.concat(projects).map((project, idx) => (
+                <div className="carousel-card" key={idx}>
+                  <a href={project.link} target="_blank" rel="noopener noreferrer">
+                    <img src={project.img} alt={project.title} />
+                    <div className="card-content">
+                      <h3>{project.title}</h3>
+                    </div>
+                  </a>
+                </div>
+              ))}
+            </div>
+            <button className="carousel-btn carousel-btn-left" onClick={handlePrev}>‹</button>
+            <button className="carousel-btn carousel-btn-right" onClick={handleNext}>›</button>
+          </div>
+        )}
+
         <div className="section-bottom-text-container">
           <div className="section-bottom-text">
             I AM A DIGITAL DESIGNER BASED IN UTTARAKHAND, INDIA <br/>
@@ -428,14 +479,14 @@ const Work = () => {
         </div>
 
         <div className="controls-container">
-          {!exploded && !isMobile && (
+          {!exploded && (
             <div
               ref={joystickRef}
               className="joystick-container"
               onMouseMove={handleJoystickMove}
               onMouseUp={handleJoystickEnd}
               onMouseLeave={handleJoystickEnd}
-              onTouchMove={(e) => handleJoystickMove(e.touches[0])}
+              onTouchMove={handleJoystickMove}
               onTouchEnd={handleJoystickEnd}
             >
               <div ref={thumbRef} className="joystick-thumb" />
