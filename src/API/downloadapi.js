@@ -1,33 +1,33 @@
-// src/API/downloadapi.js
-
-// ✅ Set your deployed backend URL
 const BACKEND_URL = "https://yashsharma-designfolio-backend.onrender.com";
 
 export const downloadResume = async () => {
   try {
-    // ✅ Removed trailing slash to match backend route
     const response = await fetch(`${BACKEND_URL}/download-resume`, {
       method: "GET",
+      headers: {
+        "Content-Type": "application/pdf",
+      },
+      credentials: "include", // ✅ Optional
     });
 
     if (!response.ok) {
       throw new Error(`Failed to fetch resume. Status: ${response.status}`);
     }
 
-    const file = await response.blob();
-    const url = window.URL.createObjectURL(file);
+    const fileBlob = await response.blob();
+    const downloadUrl = window.URL.createObjectURL(fileBlob);
 
-    const a = document.createElement("a");
-    a.style.display = "none";
-    a.href = url;
-    a.download = "Yash_Sharma_Resume.pdf";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+    const link = document.createElement("a");
+    link.href = downloadUrl;
+    link.download = "Yash_Sharma_Resume.pdf";
+    document.body.appendChild(link);
+    link.click();
 
-    window.URL.revokeObjectURL(url);
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(downloadUrl);
+
   } catch (error) {
-    console.error("Error downloading resume:", error);
-    alert("Failed to download resume. Please try again later.");
+    console.error("❌ Error downloading resume:", error);
+    alert(error.message || "Failed to download resume. Please try again later.");
   }
 };
