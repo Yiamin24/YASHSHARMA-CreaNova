@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 // Local image path
-const designerImageUrl = "/assets/A.webp";
+const designerImageUrl = "/assets/ALBADI/YYY.webp";
 
 // ------------------- Mobile Layout Component -------------------
 const HeroSectionMobile = () => {

@@ -39,7 +39,6 @@ const ScrambledLink = ({ children, href }) => {
       const el = document.querySelector(href);
       if (el) el.scrollIntoView({ behavior: "smooth" });
     }
-    // External links open normally in a new tab
   };
 
   return (
@@ -71,13 +70,36 @@ const FooterX = () => {
         }
 
         .footer-wrapper {
+          position: relative;
           width: 100%;
-          background-color: var(--footer-bg);
           color: var(--footer-text);
           font-family: var(--font-mono);
+
+          /* ✅ Background Image FIT (no cropping) */
+          background-image: url('/assets/FAV.webp');
+          background-size: contain;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-color: #ffffff; /* Optional fallback */
+          overflow: hidden;
+        }
+
+        /* ✅ Overlay Layer */
+        .footer-wrapper::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(255, 255, 255, 0.7); /* adjust transparency if needed */
+          pointer-events: none;
+          z-index: 0;
         }
 
         .footer-container {
+          position: relative; /* ✅ ensures content is above overlay */
+          z-index: 1;
           box-sizing: border-box;
           width: 100%;
           max-width: 1920px;

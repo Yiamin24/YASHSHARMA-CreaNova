@@ -283,7 +283,7 @@ const projects = [
   { id: 2, title: 'SWIPE N RISE', img: '/assets/SNR.webp', face: 'face-right', link: 'https://www.swipenrise.com/' },
   { id: 3, title: 'YASH SHARMA PORTFOLIO', img: '/assets/YSSS.webp', face: 'face-back', link: 'http://localhost:5173' },
   { id: 4, title: 'SAVAYA STAY', img: '/assets/SAVY.webp', face: 'face-left', link: 'https://www.savayastay.com/' },
-  { id: 5, title: '3D Renders', img: 'https://images.unsplash.com/photo-1617099224168-5474a6a5b6f3?w=800&q=80', face: 'face-top', link: 'https://3drenders.com' },
+  // { id: 5, title: '3D Renders', img: 'https://images.unsplash.com/photo-1617099224168-5474a6a5b6f3?w=800&q=80', face: 'face-top', link: 'https://3drenders.com' },
 ];
 
 const Work = () => {

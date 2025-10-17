@@ -87,7 +87,7 @@ const AboutSection = () => {
         .about-header { position: absolute; top: 2rem; left: 2rem; font-size: 0.875rem; letter-spacing: 1px; text-transform: uppercase; }
         .intro-content-wrapper { display: flex; flex-direction: column; align-items: center; text-align: center; }
         .intro-image { width: 100%; max-width: 300px; aspect-ratio: 1 / 1; margin-bottom: 1.5rem; }
-        .intro-image img { width: 100%; height: 100%; object-fit: cover; }
+        .intro-image img { width: 100%; height: 100%; object-fit: contain; }
         .intro-greeting h2 { text-transform: uppercase; font-size: 2rem; line-height: 1.6; font-weight: 400; }
         .intro-experience { width: 100%; max-width: 450px; }
         .intro-experience h3 {
@@ -257,7 +257,7 @@ const AboutSection = () => {
             <header className="about-header reveal-item">ABOUT ME</header>
             <div className="intro-content-wrapper">
                 <div className="intro-image reveal-item">
-                    <img src="/assets/A.webp" alt="Portrait of Yash Sharma" />
+                    <img src="/assets/ALBADI/YYYY.webp" alt="Portrait of Yash Sharma" />
                 </div>
                 <div className="intro-greeting reveal-item">
                     <h2>HELLO!</h2>
@@ -294,8 +294,8 @@ const AboutSection = () => {
         <AnimatedSection className="about-section about-section-lifestyle">
           <div className="lifestyle-image-container reveal-item">
             {/* Images are now separate for individual grid control */}
-            <img src="/assets/y.webp" alt="Lifestyle portrait" className="lifestyle-image-1" />
-            <img src="/assets/H.webp" alt="Lifestyle architecture" className="lifestyle-image-2" />
+            <img src="/assets/ALBADI/SH.webp" alt="Lifestyle portrait" className="lifestyle-image-1" />
+            <img src="/assets/ALBADI/HHH.webp" alt="Lifestyle architecture" className="lifestyle-image-2" />
           </div>
           <div className="lifestyle-text-col">
             <div className="reveal-item">
