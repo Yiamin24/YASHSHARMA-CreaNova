@@ -144,14 +144,14 @@ const HeroSectionMobile = () => {
             <img src={designerImageUrl} alt="Designer portrait" />
           </div>
           <div className="hero-section-mobile-services">
-            <p>/ART DIRECTION</p>
-            <p>/WEB DESIGN (UX/UI)</p>
-            <p>/WEB DEVELOPMENT</p>
+            <p>/INTERACTIVE WEB  </p>
+            <p>/SCALABLE SYSTEMS </p>
+            <p>/END-TO-END DEVELOPMENT</p>
           </div>
           <div className="hero-section-mobile-description">
-            I'M EXPERIENCED WEB AND UX/UI DESIGNER,<br/>
-            WHO DESIGN MEMORABLE WEB EXPERIENCES FOR<br/>
-            BRANDS OF ALL SIZES
+           I CRAFT POWERFUL WEB-EXPERIENCES,<br/>
+            THAT BLENDS PERFORMANCE, DESIGN & MAGIC<br/>
+            FOR BRANDS OF ALL SIZES.
           </div>
         </div>
       </div>
@@ -350,9 +350,9 @@ const HeroSectionDesktop = () => {
           </div>
 
           <div className="services" ref={servicesRef}>
-            <div>/ART DIRECTION</div>
-            <div>/WEB DESIGN (UX/UI)</div>
-            <div>/WEB DEVELOPMENT</div>
+            <div>/INTERACTIVE WEB  </div>
+            <div>/SCALABLE SYSTEMS </div>
+            <div>/END-TO-END DEVELOPMENT</div>
           </div>
 
           <div className="description">

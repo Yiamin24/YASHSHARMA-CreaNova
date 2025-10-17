@@ -5,8 +5,8 @@ const Services = () => {
     { id: 1, title: "WEB CRAFTING", img: "/assets/SAVYS.webp" },
     { id: 2, title: "FRONTEND MAGIC", img: "/assets/SNR.webp" },
     { id: 3, title: "BACKEND ENGINEERING", img: "/assets/TXBS.webp" },
-    { id: 4, title: "FULL-STACK CREATION", img: "/assets/YSPS.webp" },
-    { id: 5, title: "MOTION INTERACTION", img: "/assets/YSPS.webp" },
+    { id: 4, title: "FULL-STACK CREATION", img: "/assets/FAV.webp" },
+    { id: 5, title: "MOTION INTERACTION", img: "/assets/FAV.webp" },
   ];
 
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -55,7 +55,7 @@ const Services = () => {
         }
 
         .services-section-container {
-          background-color: #000; /* Black background only for this component */
+          background-color: #000;
           color: var(--text-services);
           padding: 8rem 2rem;
           width: 100%;
@@ -84,6 +84,7 @@ const Services = () => {
           text-transform: uppercase;
           transition: opacity 0.4s ease, filter 0.4s ease;
           position: relative;
+          white-space: nowrap; /* prevent wrapping */
         }
 
         .font-sans-serif {
@@ -152,11 +153,7 @@ const Services = () => {
             padding: 6rem 1rem;
           }
           .service-item {
-            padding: 0.25rem 0;
-            line-height: 1.3;
-          }
-          .floating-image-container {
-            display: none;
+            font-size: clamp(1.8rem, 4vw, 2.5rem); /* smaller font to fit in one line */
           }
         }
       `}</style>
@@ -189,7 +186,7 @@ const Services = () => {
           </div>
         </div>
 
-        <img src="/assets/YSPS.webp" alt="Icon" className="static-icon" />
+        <img src="/assets/FAV.webp" alt="Icon" className="static-icon" />
 
         <div className="bottom-text-container">
           <p>WHAT I'VE BEEN CRAFTING ALONG THE WAY</p>

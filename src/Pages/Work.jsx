@@ -4,7 +4,7 @@ import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 // --- CSS Styles ---
 const GlobalStyles = () => (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Mono:wght@400;700&display.swap');
+    @import url('https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Mono:wght@400;700&display=swap');
 
     .projects-section-container {
       position: relative;
@@ -147,7 +147,7 @@ const GlobalStyles = () => (
       top: 50%;
       transform: translateY(-50%);
       z-index: 10;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
       width: 100%;
       padding: 0 20px;
@@ -163,27 +163,34 @@ const GlobalStyles = () => (
       border-radius: 15px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.5);
       display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
+      justify-content: center; /* center image vertically */
+      align-items: center;     /* center image horizontally */
       cursor: pointer;
     }
 
     .exploded-card img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
+      max-height: 100%;
+      object-fit: contain; /* keep logos centered and visible */
       border-radius: 15px;
       transition: transform 0.3s ease;
+      display: block;
+    }
+
+    .exploded-card .card-content {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 0.5rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 100%);
+      border-radius: 0 0 15px 15px;
+      text-align: center;
+      color: white;
     }
 
     .exploded-card:hover img {
       transform: scale(1.05) rotate(1deg);
-    }
-
-    .exploded-card .card-content {
-      padding: 0.5rem;
-      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 100%);
-      border-radius: 0 0 15px 15px;
     }
 
     /* Mobile Carousel */
@@ -272,9 +279,9 @@ const GlobalStyles = () => (
 );
 
 const projects = [
-  { id: 1, title: 'SWIPE N RISE ', img: '/assets/SNR.webp', face: 'face-front', link: 'https://www.swipenrise.com/' },
-  { id: 2, title: 'TAX BAR ASSOCIATION', img: '/assets/TXB.webp', face: 'face-right', link: 'https://taxbarassociationrishikesh.com/' },
-  { id: 3, title: 'YASH SHARMA PORTFOLIO', img: '/assets/YSP.webp', face: 'face-back', link: 'http://localhost:5173' },
+  { id: 1, title: 'TAX BAR ASSOCIATION ', img: '/public/assets/TXBSS.webp', face: 'face-front', link: 'https://taxbarassociationrishikesh.com/' },
+  { id: 2, title: 'SWIPE N RISE', img: '/assets/SNR.webp', face: 'face-right', link: 'https://www.swipenrise.com/' },
+  { id: 3, title: 'YASH SHARMA PORTFOLIO', img: '/assets/YSSS.webp', face: 'face-back', link: 'http://localhost:5173' },
   { id: 4, title: 'SAVAYA STAY', img: '/assets/SAVY.webp', face: 'face-left', link: 'https://www.savayastay.com/' },
   { id: 5, title: '3D Renders', img: 'https://images.unsplash.com/photo-1617099224168-5474a6a5b6f3?w=800&q=80', face: 'face-top', link: 'https://3drenders.com' },
 ];

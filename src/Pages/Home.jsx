@@ -11,7 +11,7 @@ import Connect from './Connect';
 import FooterX from '../components/FooterX';
 import Footer from '../components/Footer';
 
-// ✅ Import the download function
+// ✅ Import the download function from your correct file
 import { downloadResume } from '../API/downloadapi';
 
 export default function Home() {

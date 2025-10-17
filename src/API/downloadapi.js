@@ -1,6 +1,11 @@
+// src/API/downloadapi.js
+
+// ✅ Set your deployed backend URL
+const BACKEND_URL = "https://yashsharma-designfolio-backend.onrender.com";
+
 export const downloadResume = async () => {
   try {
-    const response = await fetch("http://localhost:8000/download-resume/", {
+    const response = await fetch(`${BACKEND_URL}/download-resume/`, {
       method: "GET",
     });
 
@@ -22,5 +27,6 @@ export const downloadResume = async () => {
     window.URL.revokeObjectURL(url);
   } catch (error) {
     console.error("Error downloading resume:", error);
+    alert("Failed to download resume. Please try again later.");
   }
 };

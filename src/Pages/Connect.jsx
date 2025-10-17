@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
+// ✅ FIXED: Correct import casing (important on production builds)
 import { submitConnectForm } from "../API/Connectapi";
 
 /* === Instagram Button === */
@@ -271,8 +272,10 @@ const App = () => (
       .header-subtitle { letter-spacing:0.2em; font-size:0.875rem; margin-bottom:1.5rem; }
       .header-interlude { letter-spacing:0.4em; margin:1rem 0; font-size:0.875rem; }
 
-      .animated-title { font-size:6rem; line-height:1; letter-spacing:0.1em; font-weight:700; text-align:center; white-space: nowrap; }
-      @media (max-width:768px) { .animated-title { font-size:3.5rem; letter-spacing:0.02em; } }
+      .animated-title { font-size:6rem; line-height:1; letter-spacing:0.1em; font-weight:700; text-align:center; white-space: nowrap; overflow: hidden; }
+      @media (max-width:768px) { 
+        .animated-title { font-size:3rem; letter-spacing:0.02em; overflow: hidden; } /* MOBILE FIX */
+      }
 
       .connect-form { width:100%; max-width:56rem; }
       .form-layout { display:flex; flex-direction:column; gap:2rem; margin-bottom:3rem; }
