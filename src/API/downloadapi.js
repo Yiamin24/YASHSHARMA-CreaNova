@@ -15,7 +15,7 @@ export const downloadResume = async () => {
 
     const link = document.createElement("a");
     link.href = downloadUrl;
-    link.download = "Yash_Sharma_Resume.pdf";
+    link.download = "YASH_SHARMA_DEV.pdf";
     document.body.appendChild(link);
     link.click();
 
