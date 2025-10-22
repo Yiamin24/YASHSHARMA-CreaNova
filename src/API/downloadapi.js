@@ -1,5 +1,5 @@
 // src/API/downloadapi.js
-const BACKEND_URL = "https://yashsharma-designfolio-backend.onrender.com/";
+const BACKEND_URL = "https://yashsharma-designfolio-backend.onrender.com";
 
 export const downloadResume = async () => {
   try {
