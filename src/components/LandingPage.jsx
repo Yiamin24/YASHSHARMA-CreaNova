@@ -56,6 +56,8 @@ const LandingPage = () => {
 
   const arrowLayerRef = useRef(null);
   const hyphenRef = useRef(null);
+  const touchMeRef = useRef(null);
+  const middleTextRef = useRef(null);
 
   // Particles
   useEffect(() => {
@@ -80,9 +82,52 @@ const LandingPage = () => {
     }
   }, [lettersVisible]);
 
+  // Smooth floating blast effect
+  const triggerBlast = () => {
+    const allRefs = [...headerRef.current, touchMeRef.current, middleTextRef.current].filter(Boolean);
+    allRefs.forEach((el) => {
+      const text = el.innerText;
+      const parentRect = el.parentElement.getBoundingClientRect();
+
+      // Hide original text
+      el.style.visibility = "hidden";
+
+      Array.from(text).forEach((char) => {
+        const span = document.createElement("span");
+        span.innerText = char;
+        span.style.position = "absolute";
+        const rect = el.getBoundingClientRect();
+        span.style.left = `${rect.left - parentRect.left}px`;
+        span.style.top = `${rect.top - parentRect.top}px`;
+        span.style.transition = `transform 2s ease-out, opacity 2s ease-out`;
+        span.style.fontFamily = "inherit";
+        span.style.fontSize = "inherit";
+        span.style.fontWeight = "inherit";
+        span.style.color = "#fff";
+        span.style.opacity = "1";
+        el.parentElement.appendChild(span);
+
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = 200 + Math.random() * 100;
+        const dx = Math.cos(angle) * distance;
+        const dy = Math.sin(angle) * distance - 150;
+        const rotate = (Math.random() - 0.5) * 720;
+        const scale = 0.5 + Math.random();
+
+        setTimeout(() => {
+          span.style.transform = `translate(${dx}px, ${dy}px) rotate(${rotate}deg) scale(${scale})`;
+          span.style.opacity = "0";
+        }, 50);
+
+        setTimeout(() => span.remove(), 2500);
+      });
+    });
+  };
+
   const triggerShutter = (path = null) => {
     if (!shutter) {
       setShutter(true);
+      triggerBlast();
       if (path) {
         setTimeout(() => navigate(path), 1500);
       } else {
@@ -92,13 +137,14 @@ const LandingPage = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("click", () => triggerShutter());
-    window.addEventListener("wheel", () => triggerShutter());
-    window.addEventListener("keydown", () => triggerShutter());
+    const handleShutter = () => triggerShutter();
+    window.addEventListener("click", handleShutter);
+    window.addEventListener("wheel", handleShutter);
+    window.addEventListener("keydown", handleShutter);
     return () => {
-      window.removeEventListener("click", () => triggerShutter());
-      window.removeEventListener("wheel", () => triggerShutter());
-      window.removeEventListener("keydown", () => triggerShutter());
+      window.removeEventListener("click", handleShutter);
+      window.removeEventListener("wheel", handleShutter);
+      window.removeEventListener("keydown", handleShutter);
     };
   }, [shutter]);
 
@@ -132,25 +178,30 @@ const LandingPage = () => {
     };
   }, []);
 
-  // Update arrow position under hyphen
+  // Update arrow & touch me position
   useEffect(() => {
-    const updateArrowPosition = () => {
-      if (!hyphenRef.current || !arrowLayerRef.current) return;
+    const updatePositions = () => {
+      if (!hyphenRef.current || !arrowLayerRef.current || !touchMeRef.current) return;
       const hyphenRect = hyphenRef.current.getBoundingClientRect();
       const parentRect = hyphenRef.current.parentElement.getBoundingClientRect();
       const centerX = hyphenRect.left + hyphenRect.width / 2 - parentRect.left;
-      arrowLayerRef.current.style.left = `${centerX}px`;
+      // TOUCH ME above hyphen
+      touchMeRef.current.style.left = `${centerX - touchMeRef.current.offsetWidth / 2}px`;
+      touchMeRef.current.style.top = `-${touchMeRef.current.offsetHeight + 8}px`;
+      // Arrow below hyphen
+      arrowLayerRef.current.style.left = `${centerX + 5}px`;
+      arrowLayerRef.current.style.top = `${hyphenRect.height + 5}px`;
     };
-    updateArrowPosition();
-    window.addEventListener("resize", updateArrowPosition);
-    return () => window.removeEventListener("resize", updateArrowPosition);
+    updatePositions();
+    window.addEventListener("resize", updatePositions);
+    return () => window.removeEventListener("resize", updatePositions);
   }, []);
 
   return (
     <>
       <style>{`
         html, body { 
-          margin:0; padding:0; height:100%; width:100%; overflow-x:hidden; background:#0a0a0a; font-family:'Roboto Mono', monospace; color:#fff; 
+          margin:0; padding:0; height:100%; width:100%; overflow-x:hidden; overflow-y:hidden; background:#0a0a0a; font-family:'Roboto Mono', monospace; color:#fff; 
         }
         * { box-sizing:border-box; }
 
@@ -174,12 +225,13 @@ const LandingPage = () => {
         .footer-title { font-family:'Bodoni Moda', serif; font-style:italic; font-size:clamp(2rem, 5vw, 5rem); display:flex; justify-content:center; align-items:center; position:relative; gap:1ch; }
         .footer-design, .footer-folio { transition: all 1s ease-in-out; }
         .footer-hyphen { transition: opacity 0.8s ease-in-out; display:inline-block; position:relative; }
-        .arrow-layer { display:flex; flex-direction:column; align-items:center; position:absolute; top:100%; transform:translateX(-50%); gap:5px; }
+        .arrow-layer { display:flex; flex-direction:column; align-items:center; position:absolute; transform:translateX(-50%); gap:5px; }
         .arrow { width:2rem; height:2rem; border-left:3px solid rgba(255,255,255,0.7); border-bottom:3px solid rgba(255,255,255,0.7); transform: rotate(135deg); animation: arrowMove 1s ease-in-out infinite alternate; }
         .arrow:nth-child(2) { animation-delay:0.3s; }
         @keyframes arrowMove { 0% { transform: rotate(135deg) translateY(0); opacity:0.7; } 50% { transform: rotate(135deg) translateY(6px); opacity:1; } 100% { transform: rotate(135deg) translateY(0); opacity:0.7; } }
 
         .scramble-container { font-family:'Roboto Mono', monospace; color:#fff; font-weight:700; font-size:1rem; letter-spacing:0.1em; transition: all 0.3s; cursor:pointer; }
+        .touch-me-indicator { position:absolute; font-family:'Roboto Mono', monospace; color:#fff; font-size:0.9rem; font-weight:700; cursor:pointer; transition: all 0.3s; opacity:0.9; pointer-events:auto; }
 
         @media (max-width:1024px){
           .header-group{font-size:clamp(2rem,10vw,5rem);}
@@ -230,7 +282,7 @@ const LandingPage = () => {
 
           <main className="main-nav">
             <ScrambleText text="(ABOUT)" onClick={() => triggerShutter("/home")} />
-            <span className="middle-text">MIXING INTERACTIONS, CODE, & IMAGINATION</span>
+            <span className="middle-text" ref={middleTextRef}>MIXING INTERACTIONS, CODE, & IMAGINATION</span>
             <ScrambleText text="(CONTACT)" onClick={() => triggerShutter("/home")} />
           </main>
 
@@ -242,6 +294,9 @@ const LandingPage = () => {
               <div className="arrow-layer" ref={arrowLayerRef}>
                 <div className="arrow"></div>
                 <div className="arrow"></div>
+              </div>
+              <div className="touch-me-indicator" ref={touchMeRef} onClick={() => triggerShutter("/home")}>
+                TOUCH ME
               </div>
             </h2>
           </footer>
