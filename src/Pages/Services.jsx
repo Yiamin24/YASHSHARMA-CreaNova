@@ -5,7 +5,7 @@ const Services = () => {
     { id: 1, title: "WEB CRAFTING", img: "/assets/SAVYS.webp" },
     { id: 2, title: "FRONTEND MAGIC", img: "/assets/SNR.webp" },
     { id: 3, title: "BACKEND ENGINEERING", img: "/assets/TXBS.webp" },
-    { id: 4, title: "FULL-STACK CREATION", img: "/assets/FAV.webp" },
+    { id: 4, title: "FULL-STACK CREATION", img: "/assets/MOVIEFLIX.webp" },
     { id: 5, title: "MOTION INTERACTION", img: "/assets/FAV.webp" },
   ];
 

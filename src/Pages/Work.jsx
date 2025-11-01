@@ -324,6 +324,7 @@ const projects = [
   { id: 2, title: 'SWIPE N RISE', img: '/assets/SNR.webp', face: 'face-right', link: 'https://www.swipenrise.com/' },
   { id: 3, title: 'YASH SHARMA PORTFOLIO', img: '/assets/YSSS.webp', face: 'face-back', link: 'http://localhost:5173' },
   { id: 4, title: 'SAVAYA STAY', img: '/assets/SAVY.webp', face: 'face-left', link: 'https://www.savayastay.com/' },
+  { id: 5, title: 'MOVIEFLIX', img: '/assets/MOVIEFLIX.webp', face: 'face-top', link: 'https://movieflix-frontend-silk.vercel.app/' },
 ];
 
 const Work = () => {
