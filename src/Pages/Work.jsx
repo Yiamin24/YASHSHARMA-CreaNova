@@ -322,9 +322,10 @@ const GlobalStyles = () => (
 const projects = [
   { id: 1, title: 'TAX BAR ASSOCIATION', img: '/assets/TXBSS.webp', face: 'face-front', link: 'https://taxbarassociationrishikesh.com/' },
   { id: 2, title: 'SWIPE N RISE', img: '/assets/SNR.webp', face: 'face-right', link: 'https://www.swipenrise.com/' },
-  { id: 3, title: 'YASH SHARMA PORTFOLIO', img: '/assets/YSSS.webp', face: 'face-back', link: 'http://localhost:5173' },
+  { id: 3, title: 'YASH SHARMA PORTFOLIO', img: '/assets/YSSS.webp', face: 'face-back', link: 'https://yashsharma-crea-nova.vercel.app/' },
   { id: 4, title: 'SAVAYA STAY', img: '/assets/SAVY.webp', face: 'face-left', link: 'https://www.savayastay.com/' },
   { id: 5, title: 'MOVIEFLIX', img: '/assets/MOVIEFLIX.webp', face: 'face-top', link: 'https://movieflix-frontend-silk.vercel.app/' },
+  {id: 5, title: 'RescueLena', img: '/assets/RESCUELENA.webp', face: 'face-bottom', link: 'https://rescue-lena.vercel.app/' }
 ];
 
 const Work = () => {
